@@ -1,3 +1,4 @@
+using Backgammon_Backend.Hubs;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,8 @@ builder.Services.AddCors(options =>
         builder
         .AllowAnyMethod()
         .AllowAnyHeader()
-        .WithOrigins("http://localhost:3000", "https://backgammonapp.azurestaticapps.net");
+        .WithOrigins("http://localhost:3000")
+        .AllowCredentials();
     });
 });
 // Add services to the container.
@@ -37,13 +39,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-
-
 app.UseCors("CORSPolicy");
-
 
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/hubs/chat");
 
 app.Run();

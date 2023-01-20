@@ -1,5 +1,6 @@
 import { getAllByText } from '@testing-library/react'
 import React, { useState,useEffect } from 'react'
+import Chat from './components/Chat/Chat';
 
 function App () {
 
@@ -20,10 +21,7 @@ function App () {
   
   return (
     <div >
-      <h1>Test</h1>
-      <p>{alex.id}</p>
-      <p>{alex.name}</p>
-      <p>{alex.age}</p>
+      <Chat />
     </div>
   )
 }
