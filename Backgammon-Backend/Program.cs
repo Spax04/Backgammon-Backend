@@ -2,6 +2,17 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSignalR();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORSPolicy", builder =>
+    {
+        builder
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .WithOrigins("http://localhost:3000", "https://backgammonapp.azurestaticapps.net");
+    });
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -25,6 +36,9 @@ if (app.Environment.IsDevelopment())
         swaggerUIOptions.RoutePrefix = String.Empty;
     });
 }
+
+
+app.UseCors("CORSPolicy");
 
 app.UseAuthorization();
 
