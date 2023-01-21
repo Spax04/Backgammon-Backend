@@ -2,9 +2,12 @@ using Backgammon_Backend.Hubs;
 using Microsoft.OpenApi.Models;
 using Backgammon_Backend.Data;
 using Microsoft.EntityFrameworkCore;
+using Backgammon_Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddTransient<IRepository, Repository>();
+builder.Services.AddDbContext<HrContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // SingnalR
 builder.Services.AddSignalR();
@@ -29,8 +32,7 @@ builder.Services.AddSwaggerGen( swaggerGenOptions =>
     swaggerGenOptions.SwaggerDoc("v1.0", new OpenApiInfo { Title = "Backgammon game - ASP.NET React app",Version="v1.0" });
 });
 
-builder.Services.AddDbContext<HrContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 
 var app = builder.Build();

@@ -1,5 +1,6 @@
 ﻿using Backgammon_Backend.Data;
 using Backgammon_Backend.Models;
+using Backgammon_Backend.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,15 +10,18 @@ namespace Backgammon_Backend.Controllers
     [ApiController]
     public class DbController : ControllerBase
     {
-        private HrContext _context;
+        private readonly IRepository _repository;
 
-        public DbController(HrContext context)
+        public DbController(IRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        //[HttpGet]
-        //public User GetUsers()
-        
+        [HttpGet]
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            return await _repository.GetUsersAsync();
+        }
+
     }
 }

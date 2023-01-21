@@ -6,6 +6,7 @@ function App () {
 
   const [alex,setAlex] = useState({});
 
+
   const getAllByText= ()=>{
     const url = "http://localhost:5032/api/Test"
     fetch(url,{
@@ -21,7 +22,7 @@ function App () {
   
   return (
     <div >
-      <Chat />
+      
     </div>
   )
 }
