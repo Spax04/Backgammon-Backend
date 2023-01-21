@@ -30,7 +30,7 @@ builder.Services.AddSwaggerGen( swaggerGenOptions =>
 });
 
 builder.Services.AddDbContext<HrContext>(options =>
-    options.UseSqlite("Data Source = C:\\Users\\danie\\source\\repos\\Backgammon-Backend\\Backgammon-DataBase\\DataBase.db"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 var app = builder.Build();

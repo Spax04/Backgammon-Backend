@@ -3,10 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Backgammon_Backend.Models
 {
-    public class Player
+    public partial class Player
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid PlayerId { get; set; }
+
         public int NumOfGames { get; set; }
 
         public int NumOfWins { get; set; }
