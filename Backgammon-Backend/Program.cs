@@ -1,8 +1,12 @@
 using Backgammon_Backend.Hubs;
 using Microsoft.OpenApi.Models;
+using Backgammon_Backend.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+// SingnalR
 builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
@@ -25,7 +29,18 @@ builder.Services.AddSwaggerGen( swaggerGenOptions =>
     swaggerGenOptions.SwaggerDoc("v1.0", new OpenApiInfo { Title = "Backgammon game - ASP.NET React app",Version="v1.0" });
 });
 
+builder.Services.AddDbContext<HrContext>(options =>
+    options.UseSqlite("Data Source = C:\\Users\\danie\\source\\repos\\Backgammon-Backend\\Backgammon-DataBase\\DataBase.db"));
+
+
 var app = builder.Build();
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var ctx = scope.ServiceProvider.GetRequiredService<HrContext>();
+//    ctx.Database.EnsureDeleted();
+//    ctx.Database.EnsureCreated();
+//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
