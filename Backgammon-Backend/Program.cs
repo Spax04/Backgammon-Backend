@@ -35,12 +35,6 @@ builder.Services.AddDbContext<HrContext>(options =>
 
 var app = builder.Build();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var ctx = scope.ServiceProvider.GetRequiredService<HrContext>();
-//    ctx.Database.EnsureDeleted();
-//    ctx.Database.EnsureCreated();
-//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
