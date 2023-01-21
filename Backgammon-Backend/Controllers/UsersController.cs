@@ -8,11 +8,11 @@ namespace Backgammon_Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DbController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IRepository _repository;
 
-        public DbController(IRepository repository)
+        public UsersController(IRepository repository)
         {
             _repository = repository;
         }

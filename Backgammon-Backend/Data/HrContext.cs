@@ -16,15 +16,15 @@ namespace Backgammon_Backend.Data
         public DbSet<Player>? Players { get; set; }
         public DbSet<Game>? Games { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<User>().Property(x => x.UserId).HasDefaultValueSql("NEWID()");
-            //// Create Users Entity with data
+
             builder.Entity<User>().HasData(
-                new {
+                new 
+                {
                     UserId = Guid.NewGuid(),
                     NickName = "Danik",
                     Email = "danielbedrack@gmail.com",
@@ -45,8 +45,6 @@ namespace Backgammon_Backend.Data
                      Password = "Avigail227",
                      PhotoFileName = @"\Assets\Users\AvigailMargolinImg.jpeg" }                                
                 ) ;
-
-        }
-        
+        }    
     }
 }

@@ -9,5 +9,7 @@ namespace Backgammon_Backend.Services
         void InsertUser(User user);
         void UpdateUser(User user);
         void DeleteUser(Guid id);
+        Task<Game> GetGameByIdAsync(Guid id);
+
     }
 }
