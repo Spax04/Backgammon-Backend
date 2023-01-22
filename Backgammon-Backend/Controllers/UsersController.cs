@@ -22,6 +22,17 @@ namespace Backgammon_Backend.Controllers
         {
             return await _repository.GetUsersAsync();
         }
+        //[HttpGet]
+        //public async Task<User> GetUser(Guid id)
+        //{
+        //    return await _repository.GetUserByIdAsync(id);
+        //}
+        [HttpPost]
+        public void PostUser(User newUser) => _repository.InsertUser(newUser);
+        [HttpPut]
+        public void PutUser(User user) => _repository.UpdateUser(user);
+        [HttpDelete]
+        public void DeleteUser(Guid id) => _repository.DeleteUser(id);
 
     }
 }

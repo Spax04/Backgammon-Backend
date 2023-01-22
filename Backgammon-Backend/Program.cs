@@ -15,6 +15,7 @@ builder.Services.AddDbContext<HrContext>(options =>
 
 // SingnalR
 builder.Services.AddSignalR();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CORSPolicy", builder =>
@@ -33,7 +34,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen( swaggerGenOptions =>
 {
-    swaggerGenOptions.SwaggerDoc("v1.0", new OpenApiInfo { Title = "Backgammon game - ASP.NET React app",Version="v1.0" });
+    swaggerGenOptions.SwaggerDoc("v1.0", new OpenApiInfo { Title = "Backgammon & Chat - ASP.NET React App ",Version="v1.0" });
 });
 
 var app = builder.Build();

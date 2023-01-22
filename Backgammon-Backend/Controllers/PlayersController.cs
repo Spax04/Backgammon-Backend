@@ -7,17 +7,20 @@ namespace Backgammon_Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GamesController : ControllerBase
+    public class PlayersController : ControllerBase
     {
         private readonly IRepository _repository;
 
-        public GamesController(IRepository repository)
+        public PlayersController(IRepository repository)
         {
             _repository = repository;
         }
 
         [HttpGet]
-        public async Task<Game> GetGame(Guid id) => await _repository.GetGameByIdAsync(id);
+        public async Task<Player> GetPlayer(Guid id)
+        {
+            return await _repository.GetPlayerByIdAsync(id);
+        }
 
         [HttpPost]
         public void PostGame(Game newGame) => _repository.InsertGame(newGame);
