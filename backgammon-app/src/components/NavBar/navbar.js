@@ -10,7 +10,7 @@ function NavBar () {
     <header>
       <Navbar bg='dark' variant='dark'>
         <Container>
-          <Navbar.Brand to='/'>BACKGAMMON</Navbar.Brand>
+          <Navbar.Brand to='/'>TalkBack</Navbar.Brand>
           <div className='d-flex'>
             <img
               className='profileImg'
