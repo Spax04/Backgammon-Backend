@@ -1,6 +1,6 @@
 ﻿using Backgammon_Backend.Models;
 
-namespace Backgammon_Backend.Services
+namespace Backgammon_Backend.Services.Service_Interfaces
 {
     public interface IRepository
     {
@@ -8,7 +8,7 @@ namespace Backgammon_Backend.Services
         Task<User> GetUserByIdAsync(Guid id);
         Task<Game> GetGameByIdAsync(Guid id);
         Task<Player> GetPlayerByIdAsync(Guid id);
-        
+
         void InsertUser(User user);
         void UpdateUser(User user);
         void DeleteUser(Guid id);

@@ -73,44 +73,20 @@ namespace Backgammon_Backend.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NickName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PhotoFileName")
+                    b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("4a083d8d-da7a-4f70-b4a3-4f9a7b4e88c4"),
-                            Email = "danielbedrack@gmail.com",
-                            NickName = "Danik",
-                            Password = "Daniel227",
-                            PhotoFileName = "\\Assets\\Users\\DanielBedrackImg.jpg"
-                        },
-                        new
-                        {
-                            UserId = new Guid("02b70d47-b43e-4a63-a276-bebdf3cf051a"),
-                            Email = "gotlib14@gmail.com",
-                            NickName = "Shasha",
-                            Password = "Ww1020",
-                            PhotoFileName = "\\Assets\\Users\\AlexGotlibImg.jpeg"
-                        },
-                        new
-                        {
-                            UserId = new Guid("24e46eab-12fe-43ff-8793-bece2d973d97"),
-                            Email = "margolinavigail@gmail.com",
-                            NickName = "Aviguli",
-                            Password = "Avigail227",
-                            PhotoFileName = "\\Assets\\Users\\AvigailMargolinImg.jpeg"
-                        });
                 });
 
             modelBuilder.Entity("Backgammon_Backend.Models.Player", b =>

@@ -1,6 +1,6 @@
 ﻿using Backgammon_Backend.Data;
 using Backgammon_Backend.Models;
-using Backgammon_Backend.Services;
+using Backgammon_Backend.Services.Service_Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

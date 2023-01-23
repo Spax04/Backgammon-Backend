@@ -3,11 +3,13 @@ using Microsoft.OpenApi.Models;
 using Backgammon_Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Backgammon_Backend.Services;
+using Backgammon_Backend.Services.Service_Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddTransient<IRepository, Repository>();
+builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 
 // Connecting DataBase
 builder.Services.AddDbContext<HrContext>(options =>
