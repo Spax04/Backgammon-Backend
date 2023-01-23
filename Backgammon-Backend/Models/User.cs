@@ -9,14 +9,11 @@ namespace Backgammon_Backend.Models
     {
         [Key]
         public Guid UserId { get; set; }
-        public string? NickName { get; set; }
+        public string? UserName { get; set; } = string.Empty;
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; } 
         public string? Email { get; set; }
-        public string? Password { get; set; }
-
-        public string? PhotoFileName { get; set; }
-
-        [NotMapped]
-        public IFormFile? Image { get; set; }
+       
 
     }
 }

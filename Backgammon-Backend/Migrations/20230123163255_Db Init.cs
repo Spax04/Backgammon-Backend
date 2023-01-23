@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Backgammon_Backend.Migrations
 {
-    public partial class initialcreate : Migration
+    public partial class DbInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,10 +26,10 @@ namespace Backgammon_Backend.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
-                    NickName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhotoFileName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -62,21 +62,6 @@ namespace Backgammon_Backend.Migrations
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "UserId", "Email", "NickName", "Password", "PhotoFileName" },
-                values: new object[] { new Guid("02b70d47-b43e-4a63-a276-bebdf3cf051a"), "gotlib14@gmail.com", "Shasha", "Ww1020", "\\Assets\\Users\\AlexGotlibImg.jpeg" });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "UserId", "Email", "NickName", "Password", "PhotoFileName" },
-                values: new object[] { new Guid("24e46eab-12fe-43ff-8793-bece2d973d97"), "margolinavigail@gmail.com", "Aviguli", "Avigail227", "\\Assets\\Users\\AvigailMargolinImg.jpeg" });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "UserId", "Email", "NickName", "Password", "PhotoFileName" },
-                values: new object[] { new Guid("4a083d8d-da7a-4f70-b4a3-4f9a7b4e88c4"), "danielbedrack@gmail.com", "Danik", "Daniel227", "\\Assets\\Users\\DanielBedrackImg.jpg" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Players_GameId",

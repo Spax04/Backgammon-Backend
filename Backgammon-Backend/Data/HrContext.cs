@@ -22,7 +22,7 @@ namespace Backgammon_Backend.Data
 
             builder.Entity<User>().Property(x => x.UserId).HasDefaultValueSql("NEWID()");
 
-            builder.Entity<User>().HasData(
+           /* builder.Entity<User>().HasData(
                 new 
                 {
                     UserId = Guid.NewGuid(),
@@ -44,7 +44,7 @@ namespace Backgammon_Backend.Data
                      Email = "margolinavigail@gmail.com",
                      Password = "Avigail227",
                      PhotoFileName = @"\Assets\Users\AvigailMargolinImg.jpeg" }                                
-                ) ;
+                ) ;*/
         }    
     }
 }
