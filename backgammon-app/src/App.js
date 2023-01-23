@@ -4,7 +4,9 @@ import { Routes,Route } from 'react-router-dom'
 
 import Chat from './components/Chat/Chat'
 import NavBar from './components/NavBar/navbar'
-import Home from './components/Home/home'
+import Register from './components/HomePage/Register/Register'
+import Login from './components/HomePage/Login/Login'
+import Home from './components/HomePage/Home/Home'
 
 
 function App () {
@@ -27,12 +29,14 @@ function App () {
   return (
     <div>
       <NavBar/>
-      <Routes>
-        <Route path="/" exact element={<Home/>}></Route>
-        <Route path="/startgame" exact element={<Home/>}></Route>
-        <Route path="/friends" exact element={<Home/>}></Route>
-        <Route path="/rules" exact element={<Home/>}></Route>
-      </Routes>
+      {/* <Routes>
+        <Route path="/" exact element={<Login/>}></Route>
+        <Route path="/startgame" exact element={<Login/>}></Route>
+        <Route path="/friends" exact element={<Login/>}></Route>
+        <Route path="/rules" exact element={<Register/>}></Route>
+      </Routes> */}
+      <Home />
+
 
     </div>
   )

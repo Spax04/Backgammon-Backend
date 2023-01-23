@@ -12,7 +12,7 @@ namespace Backgammon_Backend.Models
         public string? NickName { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
-
+        public bool isConnected { get; set; }
         public string? PhotoFileName { get; set; }
 
         [NotMapped]
