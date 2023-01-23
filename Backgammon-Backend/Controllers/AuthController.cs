@@ -1,6 +1,7 @@
 ﻿using Backgammon_Backend.Dto;
 using Backgammon_Backend.Models;
 using Backgammon_Backend.Services.Service_Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace Backgammon_Backend.Controllers
         }
 
 
-        [HttpPost("register")]
+        [HttpPost("register"), AllowAnonymous]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
             if(request == null)

@@ -22,29 +22,29 @@ namespace Backgammon_Backend.Data
 
             builder.Entity<User>().Property(x => x.UserId).HasDefaultValueSql("NEWID()");
 
-           /* builder.Entity<User>().HasData(
-                new 
-                {
-                    UserId = Guid.NewGuid(),
-                    NickName = "Danik",
-                    Email = "danielbedrack@gmail.com",
-                    Password = "Daniel227",
-                    PhotoFileName = @"\Assets\Users\DanielBedrackImg.jpg" },
-                 new
+            /* builder.Entity<User>().HasData(
+                 new 
                  {
                      UserId = Guid.NewGuid(),
-                     NickName = "Shasha",
-                     Email = "gotlib14@gmail.com",
-                     Password = "Ww1020",
-                     PhotoFileName = @"\Assets\Users\AlexGotlibImg.jpeg" },
-                 new
-                 {
-                     UserId = Guid.NewGuid(),
-                     NickName = "Aviguli",
-                     Email = "margolinavigail@gmail.com",
-                     Password = "Avigail227",
-                     PhotoFileName = @"\Assets\Users\AvigailMargolinImg.jpeg" }                                
-                ) ;*/
+                     NickName = "Danik",
+                     Email = "danielbedrack@gmail.com",
+                     Password = "Daniel227",
+                     PhotoFileName = @"\Assets\Users\DanielBedrackImg.jpg" },
+                  new
+                  {
+                      UserId = Guid.NewGuid(),
+                      NickName = "Shasha",
+                      Email = "gotlib14@gmail.com",
+                      Password = "Ww1020",
+                      PhotoFileName = @"\Assets\Users\AlexGotlibImg.jpeg" },
+                  new
+                  {
+                      UserId = Guid.NewGuid(),
+                      NickName = "Aviguli",
+                      Email = "margolinavigail@gmail.com",
+                      Password = "Avigail227",
+                      PhotoFileName = @"\Assets\Users\AvigailMargolinImg.jpeg" }                                
+                 ) ;*/
         }    
     }
 }
