@@ -46,7 +46,7 @@ namespace Backgammon_Backend.Services
 
         private string LoginUser(UserDto request)
         {
-            User user = _context.Users.FirstOrDefault(user => user.UserName == request.UserName);
+            User user = _context.Users.First(user => user.UserName == request.UserName);
 
             if(user == null)
             {

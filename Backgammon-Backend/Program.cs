@@ -43,9 +43,10 @@ builder.Services.AddSwaggerGen( swaggerGenOptions =>
     swaggerGenOptions.SwaggerDoc("v1.0", new OpenApiInfo { Title = "Backgammon & Chat - ASP.NET React App ", Version = "v1.0" });
     swaggerGenOptions.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
-        Description = "Standard Authorization header using the Bearer sheme (\"bearer{token\"})",
+        Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
         In = ParameterLocation.Header,
         Name = "Authorization",
+        BearerFormat = "JWT",
         Type = SecuritySchemeType.ApiKey
     });
     swaggerGenOptions.OperationFilter<SecurityRequirementsOperationFilter>();

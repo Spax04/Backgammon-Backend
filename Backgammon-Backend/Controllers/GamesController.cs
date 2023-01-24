@@ -19,7 +19,8 @@ namespace Backgammon_Backend.Controllers
             _repository = repository;
         }
 
-        [HttpGet,Authorize]
+        [HttpGet]
+        [Authorize]
         public Game GetGame() =>  new Game
         {
             GameId = Guid.NewGuid(),
