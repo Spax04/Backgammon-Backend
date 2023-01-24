@@ -1,15 +1,16 @@
 import React from 'react'
-import Chat from '../../ContactsScreen/SideBar/Chat'
+import { Container } from 'react-bootstrap'
+import Chat from '../../ContactsScreen/Chat/Chat'
 import SideBar from '../../ContactsScreen/SideBar/SideBar'
 import "../Home/Home.css"
 
 const Home = () => {
   return (
     <div className='home'>
-        <div className='container'>
+        <Container>
             <SideBar />
             <Chat/>
-        </div>
+        </Container>
     </div>
   )
 }
