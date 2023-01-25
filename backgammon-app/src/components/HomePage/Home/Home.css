@@ -1,5 +1,7 @@
 .home{
-    background-color: #a7bcff;
+    background: rgb(34,193,195);
+    background: linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+    font-family: "work sans";
     height: 100vh;
     display: flex;
     align-items: center;
@@ -8,10 +10,7 @@
     
 }
 .container{
-    border: 1px solid #fff;
     border-radius: 10px;
-    width: 65%;
-    height: 80%;
     display: flex;
     overflow: hidden;
 }

@@ -1,9 +1,10 @@
 import React from 'react'
 import BackIcon from '../../../assets/Icons/BackgammonIcon.png'
 import ChatIcon from '../../../assets/Icons/ChatIcon.png'
-import Messages from './Messages'
+
+import '../../ContactsScreen/SideBar.css'
 import Input from './Input'
-import './SideBar.css'
+import Messages from './Messages'
 
 const Chat = () => {
   return (

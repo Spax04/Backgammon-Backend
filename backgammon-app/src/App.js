@@ -29,13 +29,15 @@ function App () {
   return (
     <div>
       <NavBar/>
-      {/* <Routes>
+      <Routes>
         <Route path="/" exact element={<Login/>}></Route>
-        <Route path="/startgame" exact element={<Login/>}></Route>
-        <Route path="/friends" exact element={<Login/>}></Route>
+        <Route path="/startgame" exact element={<Home/>}></Route>
+        <Route path="/contacts" exact element={<Home/>}></Route>
         <Route path="/rules" exact element={<Register/>}></Route>
-      </Routes> */}
-      <Home />
+        <Route path="/login" exact element={<Login/>}></Route>
+        <Route path="/register" exact element={<Register/>}></Route>
+      </Routes> 
+      
 
 
     </div>
