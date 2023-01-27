@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
-import Chat from '../../ContactsScreen/Chat/Chat'
-import SideBar from '../../ContactsScreen/SideBar/SideBar'
+import Chat from '../../components/ContactsScreen/Chat/Chat'
+import SideBar from '../../components/ContactsScreen/SideBar/SideBar'
 import "../Home/Home.css"
 
 const Home = () => {

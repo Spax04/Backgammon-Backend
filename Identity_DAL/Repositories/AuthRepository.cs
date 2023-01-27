@@ -67,23 +67,24 @@ namespace Backgammon_Backend.Services
 
 
         // Login layer
-        private AuthenticationResponse Login(AuthenticationRequest request)
+        private Response Login(AuthenticationRequest request)
         {
             User user = _context.Users.First(user => user.Username == request.Username);
 
             if(user == null)
             {
-                return null;
+                return new FailedResponse($"User wuth username {request.Username} doesn't exist");
             }
             
 
             if (!_hashUtilits.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return null;
+                return new FailedResponse($"Wrong password");
             }
 
             AuthenticationResponse response = new AuthenticationResponse()
             {
+                
                 Id = user.UserId,
                 Username = user.Username,
                 Email = user.Email,
@@ -95,7 +96,12 @@ namespace Backgammon_Backend.Services
             return response;
         }
 
-        public Task<AuthenticationResponse> LoginAsync(AuthenticationRequest request) => Task.Run(() => Login(request));
+        public Task<Response> LoginAsync(AuthenticationRequest request) => Task.Run(() => Login(request));
 
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            return _context.Users;
+        }
     }
 }

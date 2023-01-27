@@ -23,8 +23,9 @@ namespace Identity_DAL.Authorization
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name,user.Username),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim("id",user.UserId!.ToString()),
+                new Claim("name",user.Username!),
+                new Claim("email", user.Email!)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
@@ -42,7 +43,7 @@ namespace Identity_DAL.Authorization
             return jwt;
         }
 
-        public string UpdateToken(User user, string token)
+        public string RefreshToken(User user, string token)
         {
             throw new NotImplementedException();
         }

@@ -37,7 +37,6 @@ else
 
 // SingnalR
 builder.Services.AddSignalR();
-builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddCors(options =>
 {

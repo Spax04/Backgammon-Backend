@@ -9,6 +9,7 @@ namespace Backgammon_Backend.Services.Service_Interfaces
     public interface IAuthRepository
     {
         Task<Response> RegisterationAsync(RegistrationRequest request);
-        Task<AuthenticationResponse> LoginAsync(AuthenticationRequest request);
+        Task<Response> LoginAsync(AuthenticationRequest request);
+        IEnumerable<User> GetAllUsers();
     }
 }

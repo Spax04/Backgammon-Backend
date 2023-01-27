@@ -14,7 +14,7 @@ namespace Backgammon_Backend.Controllers
     public class AuthController : ControllerBase
     {
         private IAuthRepository _authRepository;
-        public AuthController(IAuthRepository authRepository )
+        public AuthController(IAuthRepository authRepository)
         {
             _authRepository = authRepository;
         }
@@ -23,7 +23,7 @@ namespace Backgammon_Backend.Controllers
         [HttpPost("register"), AllowAnonymous]
         public async Task<ActionResult<Response>> Register(RegistrationRequest request)
         {
-            if(request == null)
+            if (request == null)
                 return BadRequest("User input error");
 
             return Ok(await _authRepository.RegisterationAsync(request));
@@ -37,5 +37,14 @@ namespace Backgammon_Backend.Controllers
 
             return Ok(await _authRepository.LoginAsync(request));
         }
+        
+        [HttpGet("getTest")]
+        [Authorize]
+        public  ActionResult<IEnumerable<User>> Get()
+        {
+
+            return Ok( _authRepository.GetAllUsers());
+        }
+
     }
 }
