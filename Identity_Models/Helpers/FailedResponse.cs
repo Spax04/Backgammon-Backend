@@ -8,9 +8,10 @@ namespace Identity_Models.Helpers
 {
     public class FailedResponse : Response
     {
-        public IEnumerable<string> Errors { get; set; }
-        public FailedResponse() : base(false)
+        public string ErrorMassage { get; set; }
+        public FailedResponse(string massage) : base(false)
         {
+            ErrorMassage = massage;
         }
     }
 }

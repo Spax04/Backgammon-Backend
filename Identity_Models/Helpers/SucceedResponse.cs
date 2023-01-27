@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Identity_Models.Helpers
 {
-    internal class SucceedResponse : Response
+    public class SucceedResponse : Response
     {
         public string Message { get; set; }
         public SucceedResponse(string message) : base(true)

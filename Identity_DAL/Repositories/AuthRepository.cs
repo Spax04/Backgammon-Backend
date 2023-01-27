@@ -1,8 +1,11 @@
-﻿using Backgammon_Backend.Data;
-using Backgammon_Backend.Dto;
+﻿using AutoMapper;
+using Backgammon_Backend.Data;
 using Backgammon_Backend.Services.Service_Interfaces;
 using Identity_DAL.Authorization.Interfaces;
+using Identity_DAL.AuthorizationUtilits.Interfaces;
 using Identity_Models.Authentication;
+using Identity_Models.DTO.Registration;
+using Identity_Models.Helpers;
 using Identity_Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -17,81 +20,82 @@ namespace Backgammon_Backend.Services
 {
     public class AuthRepository : IAuthRepository
     {
-        private DevDataContext _context;
+        private DataContext _context;
         private readonly IConfiguration _config;
         private IJwtUtilits _jwtUtilits;
-        public AuthRepository(DevDataContext context, IConfiguration config, IJwtUtilits jwtUtilits)
+        private readonly IMapper _mapper;
+        private IHashUtilits _hashUtilits;
+        public AuthRepository(
+            DataContext context,
+            IConfiguration config,
+            IJwtUtilits jwtUtilits,
+            IMapper mapper,
+            IHashUtilits hashUtilits
+            )
         {
             _context = context;
             _config = config;
             _jwtUtilits = jwtUtilits;
+            _mapper = mapper;
+            _hashUtilits = hashUtilits;
         }
 
-
-        private User RegisterUser(UserDto request)
+        // Registaration layer
+        private Response Registration(RegistrationRequest request)
         {
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            if(request == null)
+                return new FailedResponse("Request is null");
+
+            if (_context.Users.Any(x => x.Username == request.Username))
+                return new FailedResponse($"Username {request.Username} is taken");
+
+            _hashUtilits.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             User user = new User();
-            
-            user.UserName = request.UserName;
+            user.Username = request.Username;
             user.Email = request.Email;
+            user.ImgUrl = request.ImgUrl;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return user;
+            return new SucceedResponse($"User with username {user.Username} was registred");
         }
-
-        public Task<User> RegisterUserAsync(UserDto request) => Task.Run(() => RegisterUser(request));
-
+        public Task<Response> RegisterationAsync(RegistrationRequest request) => Task.Run(()=> Registration(request));
 
 
-        private string LoginUser(AuthenticationRequest request)
+        // Login layer
+        private AuthenticationResponse Login(AuthenticationRequest request)
         {
-            User user = _context.Users.First(user => user.UserName == request.Username);
+            User user = _context.Users.First(user => user.Username == request.Username);
 
             if(user == null)
             {
-                return "user doesnt exist";
+                return null;
             }
             
 
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            if (!_hashUtilits.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return "password isn't correct";
+                return null;
             }
-            string token = _jwtUtilits.CreateToken(user);
-            return token;
+
+            AuthenticationResponse response = new AuthenticationResponse()
+            {
+                Id = user.UserId,
+                Username = user.Username,
+                Email = user.Email,
+                ImgUrl = user.ImgUrl,
+
+            };
+            
+            response.Token = _jwtUtilits.CreateToken(user);
+            return response;
         }
 
-        public Task<string> LoginUserAsync(UserDto request) => Task.Run(() => LoginUser(request));
+        public Task<AuthenticationResponse> LoginAsync(AuthenticationRequest request) => Task.Run(() => Login(request));
 
-
-        // Token section
-       
-
-
-        // Hashing section
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using(var hmac = new HMACSHA512()) // Enctypted algorithem
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-            }
-        }
-
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using(var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
-        }
     }
 }

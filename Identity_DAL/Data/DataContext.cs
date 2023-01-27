@@ -1,6 +1,8 @@
-﻿using Identity_Models.Users;
+﻿using Backgammon_Backend.Models;
+using Identity_Models.Users;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Backgammon_Backend.Data
 {
@@ -8,7 +10,9 @@ namespace Backgammon_Backend.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
+            
         }
+
 
         public DbSet<User>? Users { get; set; }
 
@@ -16,7 +20,7 @@ namespace Backgammon_Backend.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<User>().Property(x => x.UserId).HasDefaultValueSql("NEWID()");
+           // builder.Entity<User>().Property(x => x.UserId).HasDefaultValueSql("NEWID()");
 
 
 
@@ -24,4 +28,3 @@ namespace Backgammon_Backend.Data
         }
     }
 }
-

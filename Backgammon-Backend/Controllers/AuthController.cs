@@ -1,5 +1,7 @@
-﻿using Backgammon_Backend.Dto;
-using Backgammon_Backend.Services.Service_Interfaces;
+﻿using Backgammon_Backend.Services.Service_Interfaces;
+using Identity_Models.Authentication;
+using Identity_Models.DTO.Registration;
+using Identity_Models.Helpers;
 using Identity_Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,21 +21,21 @@ namespace Backgammon_Backend.Controllers
 
 
         [HttpPost("register"), AllowAnonymous]
-        public async Task<ActionResult<User>> Register(UserDto request)
+        public async Task<ActionResult<Response>> Register(RegistrationRequest request)
         {
             if(request == null)
                 return BadRequest("User input error");
 
-            return Ok(await _authRepository.RegisterUserAsync(request));
+            return Ok(await _authRepository.RegisterationAsync(request));
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(UserDto request)
+        public async Task<ActionResult<AuthenticationResponse>> Login(AuthenticationRequest request)
         {
             if (request == null)
                 return BadRequest("User input error");
 
-            return Ok(await _authRepository.LoginUserAsync(request));
+            return Ok(await _authRepository.LoginAsync(request));
         }
     }
 }

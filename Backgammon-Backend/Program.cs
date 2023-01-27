@@ -8,28 +8,36 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Swashbuckle.AspNetCore.Filters;
+using Identity_DAL.Authorization.Interfaces;
+using Identity_DAL.Authorization;
+using Identity_DAL.AuthorizationUtilits;
+using Identity_DAL.AuthorizationUtilits.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IJwtUtilits, JwtUtilits>();
+builder.Services.AddScoped<IHashUtilits, HashUtilits>();
 
 // Connecting DataBase
 if (builder.Environment.IsProduction())
 {
+
     builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection")));
 }
 else
 {
-    builder.Services.AddDbContext<DevDataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DevelopmentConnection")));
+    builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DevelopmentConnection")));
 }
 
 
 // SingnalR
 builder.Services.AddSignalR();
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddCors(options =>
 {
