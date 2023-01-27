@@ -1,6 +1,6 @@
 ﻿using Backgammon_Backend.Dto;
-using Backgammon_Backend.Models;
 using Backgammon_Backend.Services.Service_Interfaces;
+using Identity_Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

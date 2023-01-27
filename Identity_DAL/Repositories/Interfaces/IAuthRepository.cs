@@ -1,5 +1,5 @@
 ﻿using Backgammon_Backend.Dto;
-using Backgammon_Backend.Models;
+using Identity_Models.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backgammon_Backend.Services.Service_Interfaces

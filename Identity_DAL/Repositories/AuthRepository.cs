@@ -1,8 +1,11 @@
 ﻿using Backgammon_Backend.Data;
 using Backgammon_Backend.Dto;
-using Backgammon_Backend.Models;
 using Backgammon_Backend.Services.Service_Interfaces;
+using Identity_DAL.Authorization.Interfaces;
+using Identity_Models.Authentication;
+using Identity_Models.Users;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,12 +17,14 @@ namespace Backgammon_Backend.Services
 {
     public class AuthRepository : IAuthRepository
     {
-        readonly HrContext _context;
+        private DevDataContext _context;
         private readonly IConfiguration _config;
-        public AuthRepository(HrContext context, IConfiguration config)
+        private IJwtUtilits _jwtUtilits;
+        public AuthRepository(DevDataContext context, IConfiguration config, IJwtUtilits jwtUtilits)
         {
             _context = context;
             _config = config;
+            _jwtUtilits = jwtUtilits;
         }
 
 
@@ -44,9 +49,9 @@ namespace Backgammon_Backend.Services
 
 
 
-        private string LoginUser(UserDto request)
+        private string LoginUser(AuthenticationRequest request)
         {
-            User user = _context.Users.First(user => user.UserName == request.UserName);
+            User user = _context.Users.First(user => user.UserName == request.Username);
 
             if(user == null)
             {
@@ -58,7 +63,7 @@ namespace Backgammon_Backend.Services
             {
                 return "password isn't correct";
             }
-            string token = CreateToken(user);
+            string token = _jwtUtilits.CreateToken(user);
             return token;
         }
 
@@ -66,27 +71,7 @@ namespace Backgammon_Backend.Services
 
 
         // Token section
-        private string CreateToken(User user)
-        {
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name,user.UserName)
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _config.GetSection("AppSettings:Token").Value));
-
-            var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha512Signature);
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: creds);
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
-        }
+       
 
 
         // Hashing section

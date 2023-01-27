@@ -12,12 +12,21 @@ using Swashbuckle.AspNetCore.Filters;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddTransient<IRepository, Repository>();
+
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 
 // Connecting DataBase
-builder.Services.AddDbContext<HrContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+if (builder.Environment.IsProduction())
+{
+    builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection")));
+}
+else
+{
+    builder.Services.AddDbContext<DevDataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DevelopmentConnection")));
+}
+
 
 // SingnalR
 builder.Services.AddSignalR();
@@ -35,6 +44,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
