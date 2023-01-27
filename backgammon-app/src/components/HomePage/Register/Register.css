@@ -10,7 +10,7 @@ html{
   font-size: 100%;
 }
 
-#loginform{
+#registerform{
   max-width: 500px;
   min-width: 300px;
   max-height: 700px;
@@ -42,7 +42,7 @@ html{
 .row input{
   width: 80%;
   box-sizing: border-box;
-	border: none;
+  border: none;
   font-size: 1.3rem;
   padding-left: 1.5rem;
   padding-bottom: 1rem;
@@ -72,7 +72,7 @@ html{
   color: rgba(187,187,187,0.9);
 }
 
-.row button{
+.row #submitBtn{
   border-radius: 25px;
   width: 80%;
   height: 40px;
@@ -87,52 +87,22 @@ html{
 }
 
 
-.row button:hover{
-  opacity: 0.8;
+.row #submitBtn:hover{
+  opacity: 0.7;
 }
 
 #button{
   padding-bottom: 1.5rem;
 }
-
-#facebookIcon{
-  background-repeat: no-repeat;
-  width: 4rem;
-  height: 4rem;
+#imgFile img{
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+}
+#imgFile span{ 
+    margin: 10px;
 }
 
-#twitterIcon{
-  background-repeat: no-repeat;
-  width: 4rem;
-  height: 4rem;
-}
-
-#googleIcon{
-  background-repeat: no-repeat;
-  width: 4rem;
-  height: 4rem;
-}
-
-#iconGroup{
-  display:flex;
-  justify-content: center;
-  padding: 2rem 0;
-  position: relative;
-  gap: 10px;
-  cursor: pointer;
-}
-
-#alternativeLogin {
-   text-align: center;
-   align-items: center;
-   padding-top: 2rem;
-   margin-top: 1.5rem;
-   color: black;
-}
-.alternativeLogin .createAcc{
-  text-align: center;
-  color: black;
-}
 
 
 

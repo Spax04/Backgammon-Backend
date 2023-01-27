@@ -26,10 +26,11 @@ function NavBar () {
             <NavLink className='nav-link' to='/'>
               Home
             </NavLink>
-            <NavLink className='nav-link' to='/friends'>
-              Friends
+            <NavLink className='nav-link' to='/contacts'>
+              Contacts
             </NavLink>
-            <NavLink className='nav-link'>Log In</NavLink>
+            <NavLink className='nav-link' to='/login'>Log In</NavLink>
+            <NavLink className='nav-link' to='/register'>Register</NavLink>
           </Nav>
         </Container>
       </Navbar>

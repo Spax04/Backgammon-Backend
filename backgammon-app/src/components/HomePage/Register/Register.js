@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import { Row } from "react-bootstrap";
-import "../Login/Login.css"
+import { Container } from "react-bootstrap"
 import AddAvatar from "../../../assets/Icons/AddAvatar.png"
+import "../Register/Register.css"
+
 
 const Register = () => {
   // States for registration
@@ -94,14 +95,13 @@ const Register = () => {
     );
   };
   const FormHeader = (props) => <h2 id="headerTitle">Registration</h2>;
+  
   return (
-    <div id="loginform">
+    <Container >
+      <div id="registerform">
       <FormHeader />
       {/* Calling to the methods */}
-      <div className="messages">
         {errorMessage()}
-        {successMessage()}
-      </div>
       <form>
         <div className="row">
           <label>Name</label>
@@ -156,11 +156,12 @@ const Register = () => {
             </label>
           </div>
         </div>
-        <div className="row" id="button">
-          <input onClick={() => handleSubmit()} type="submit" />
+        <div className="row">
+          <input id="submitBtn" onClick={() => handleSubmit()} type="submit" />
         </div>
       </form>
-    </div>
+      </div>
+    </Container>
   );
 };
 export default Register;
