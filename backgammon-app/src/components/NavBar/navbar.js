@@ -2,10 +2,18 @@ import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { NavLink } from 'react-router-dom'
-
+import { useState } from 'react'
 import Figure from 'react-bootstrap/Figure'
 
-function NavBar () {
+function NavBar (props) {
+
+  // const [userSignedIn,SetUserSignedIn] = useState(false)
+
+  // if(props != null){
+  //   SetUserSignedIn(true)
+  // }
+
+
   return (
     <header>
       <Navbar bg='dark' variant='dark'>
@@ -17,7 +25,7 @@ function NavBar () {
               src='https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'
               alt='user'
             />
-            <h3>Name</h3>
+            
           </div>
           <Nav className='justify-content-end'>
             <NavLink className='nav-link' to='/rules'>

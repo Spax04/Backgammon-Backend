@@ -29,7 +29,7 @@ namespace Backgammon_Backend.Controllers
             return Ok(await _authRepository.RegisterationAsync(request));
         }
 
-        [HttpPost("login")]
+        [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<AuthenticationResponse>> Login(AuthenticationRequest request)
         {
             if (request == null)

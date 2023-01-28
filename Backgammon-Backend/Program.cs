@@ -12,12 +12,15 @@ using Identity_DAL.Authorization.Interfaces;
 using Identity_DAL.Authorization;
 using Identity_DAL.AuthorizationUtilits;
 using Identity_DAL.AuthorizationUtilits.Interfaces;
+using Identity_DAL.Repositories.Interfaces;
+using Identity_DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtUtilits, JwtUtilits>();
 builder.Services.AddScoped<IHashUtilits, HashUtilits>();
 

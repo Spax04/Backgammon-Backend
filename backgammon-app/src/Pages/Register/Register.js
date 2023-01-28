@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap'
 import AddAvatar from '../../assets/Icons/AddAvatar.png'
 import '../Register/Register.css'
 import IdentityService from '../../services/IdentityService'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
   const service = new IdentityService()

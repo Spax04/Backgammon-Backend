@@ -10,7 +10,7 @@ namespace Identity_DAL.Authorization.Interfaces
     public interface IJwtUtilits
     {
         public string CreateToken(User user);
-        public string RefreshToken(User user , string token);
+        public string CreateRefreshToken(Guid userId, string tokenId);
         public bool VerifyToken(string token);
     }
 }

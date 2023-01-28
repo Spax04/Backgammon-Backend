@@ -7,24 +7,34 @@ const USER_REGEX = process.env.USER_REGEX;
 const PWD_REGEX = process.env.PWD_REGEX;
 
 class IdentityService {
-
+   
     async Register(data){
-        const response = fetch("http://localhost:5032/api/Auth/register",{
+      const response = fetch("http://localhost:5032/api/Auth/register",{
             method:"POST",
             headers:{'Content-Type':"application/json"},
             body:JSON.stringify(data)
-          });
-        return response
+          })
+          return response
     }
 
-    Login(data){
-        const response = fetch("http://localhost:5032/api/Auth/login",{
+    async Login(data){
+      const response = fetch("http://localhost:5032/api/Auth/login",{
             method : "POST",
             headers : {'Content-Type':"application/json"},
             credentials : "include",
             body : JSON.stringify(data)
-          });
-        return response
+          })
+          return response
+    }
+
+    async GetUser(userId){
+      const response = fetch(`http://localhost:5032/api/User/${userId}`,{
+            method : "GET",
+            headers : {'Content-Type':"application/json", "Authorization": "bearer "+ sessionStorage.getItem('token')},
+            credentials : "include",
+            
+          })
+          return response
     }
 
 

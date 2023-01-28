@@ -1,4 +1,5 @@
-﻿using Identity_DAL.Authorization.Interfaces;
+﻿using Backgammon_Backend.Data;
+using Identity_DAL.Authorization.Interfaces;
 using Identity_Models.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -15,14 +16,17 @@ namespace Identity_DAL.Authorization
     public class JwtUtilits : IJwtUtilits
     {
         private readonly IConfiguration _config;
-        public JwtUtilits(IConfiguration config)
+        private readonly DataContext _dataContext;
+        public JwtUtilits(IConfiguration config, DataContext dataContext) 
         {
             _config = config;
+            _dataContext = dataContext;
         }
         public string CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>
             {
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("id",user.UserId!.ToString()),
                 new Claim("name",user.Username!),
                 new Claim("email", user.Email!)
@@ -43,7 +47,7 @@ namespace Identity_DAL.Authorization
             return jwt;
         }
 
-        public string RefreshToken(User user, string token)
+        public string CreateRefreshToken(Guid userId, string tokenId)
         {
             throw new NotImplementedException();
         }

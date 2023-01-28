@@ -69,7 +69,7 @@ namespace Backgammon_Backend.Services
         // Login layer
         private Response Login(AuthenticationRequest request)
         {
-            User user = _context.Users.First(user => user.Username == request.Username);
+            User user = _context.Users.FirstOrDefault(user => user.Username == request.Username);
 
             if(user == null)
             {
@@ -84,15 +84,11 @@ namespace Backgammon_Backend.Services
 
             AuthenticationResponse response = new AuthenticationResponse()
             {
-                
                 Id = user.UserId,
-                Username = user.Username,
-                Email = user.Email,
-                ImgUrl = user.ImgUrl,
-
             };
             
             response.Token = _jwtUtilits.CreateToken(user);
+            //response.RefreshToken = _jwtUtilits.RefreshToken();
             return response;
         }
 
