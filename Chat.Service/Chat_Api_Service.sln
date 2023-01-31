@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backgammon-ChatServer", "Backgammon-ChatServer\Backgammon-ChatServer.csproj", "{94CDD5D7-D14E-48B7-A52C-91829F7D648F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat_API", "Backgammon-ChatServer\Chat_API.csproj", "{94CDD5D7-D14E-48B7-A52C-91829F7D648F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat_Models", "Chat_Models\Chat_Models.csproj", "{D36D662C-DA13-4C9D-B314-C2A1ADB05CEB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat_DAL", "Chat_DAL\Chat_DAL.csproj", "{D8432824-09DD-486D-9204-1BA6143CEEFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat_Services", "Chat_Services\Chat_Services.csproj", "{9C95B83E-9475-4886-9F6A-8F9196C34FFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat_Services", "Chat_Services\Chat_Services.csproj", "{9C95B83E-9475-4886-9F6A-8F9196C34FFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

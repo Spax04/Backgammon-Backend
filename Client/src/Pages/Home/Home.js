@@ -22,10 +22,27 @@ function Home (props) {
     }
   }, [])
 
+  const testToChat = ()=>{
+      const response = fetch(`http://localhost:7112/api/Chat/`,{
+            method : "GET",
+            headers : {'Content-Type':"application/json", "Authorization": "bearer "+ sessionStorage.getItem('token')},
+            credentials : "include",
+            
+          }).then((resp)=>{
+            return resp.json()
+          }).then((resp)=>{
+            console.log(resp)
+          })
+          
+    }
+  
+
   return (
     <div className='home'>
       {props.user ? (
+        
         <Container>
+          <button onClick={testToChat}>Send Test</button>
           <SideBar user={props.user} />
           <Chat />
         </Container>
