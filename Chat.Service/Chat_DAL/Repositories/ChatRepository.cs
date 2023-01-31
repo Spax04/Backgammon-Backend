@@ -20,12 +20,13 @@ namespace Chat_DAL.Repositories
         }
 
         // FINISHED
-        private Chat CreateChat(Guid chatId, Guid chatterId, DateTime startedAt)
+        private Chat CreateChat(Guid chatId, Guid chatterOneId, Guid chatterTwoId, DateTime startedAt)
         {
             Chat newChat = new Chat
             {
                 ChatId = chatId,
-                ChatterId = chatterId,
+                ChatterOneId = chatterOneId,
+                ChatterTwoId = chatterTwoId,
                 StartedAt = startedAt,
                 IsClosed = false
             };
@@ -34,7 +35,7 @@ namespace Chat_DAL.Repositories
 
             return newChat;
         }
-        public async Task<Chat> CreateChatAsync(Guid chatId, Guid chatterId, DateTime startedAt) => await Task.Run(() => CreateChat(chatId, chatterId, startedAt));
+        public async Task<Chat> CreateChatAsync(Guid chatId, Guid chatterOneId, Guid chatterTwoId, DateTime startedAt) => await Task.Run(() => CreateChat(chatId,  chatterOneId,  chatterTwoId, startedAt));
 
         // FINISHED
 
@@ -50,7 +51,8 @@ namespace Chat_DAL.Repositories
             return new Chat
             {
                 ChatId = chat.ChatId,
-                ChatterId = chat.ChatterId!,
+                ChatterTwoId = chat.ChatterTwoId!,
+                ChatterOneId = chat.ChatterOneId!,
                 IsClosed= chat.IsClosed,
                 StartedAt = chat.StartedAt,
                 EndedAt = chat.EndedAt
@@ -67,7 +69,8 @@ namespace Chat_DAL.Repositories
                 .Select(u => new Chat
                 {
                     ChatId = u.ChatId,
-                    ChatterId = (Guid)u.ChatterId!,
+                    ChatterOneId = u.ChatterOneId!,
+                    ChatterTwoId = u.ChatterTwoId!,
                     IsClosed = u.IsClosed,
                     StartedAt = u.StartedAt,
                     EndedAt = u.EndedAt

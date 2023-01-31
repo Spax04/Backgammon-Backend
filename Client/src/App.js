@@ -7,13 +7,17 @@ import Register from '../src/Pages/Register/Register'
 import Login from '../src/Pages/Login/Login'
 import Home from '../src/Pages/Home/Home'
 import Rules from './Pages/Rules/Rules'
+import ChatService from './services/ChatService'
+
 
 function App () {
   const service = new IdentityService()
+  const chatService = new ChatService();
 
   const navigate = useNavigate()
   const [isRendered, setIsRendered] = useState(false)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
+  const [chatter, setChatter] = useState(null)
 
   const getUserFromApi = token => {
     if (token == null) {
@@ -28,12 +32,26 @@ function App () {
     }
   }
 
+  const getChatterFromApi = token => {
+    if (token == null) {
+      chatService
+        .GetChatter(token)
+        .then(resp => {
+          return resp.json()
+        })
+        .then(resp => {
+          setChatter(resp)
+        })
+    }
+  }
+
   useEffect(() => {
     let token = sessionStorage.getItem('token')
     if (token === '' || token === null) {
       navigate('/login')
     } else {
       getUserFromApi(token)
+      getChatterFromApi(token)
     }
   }, [])
 
@@ -46,8 +64,8 @@ function App () {
       )}
 
       <Routes>
-        <Route path='/' exact element={<Home user={user} />} />
-        <Route path='/login' element={<Login setUser={setUser} />} />
+        <Route path='/' exact element={<Home user={user} chatter={chatter} />} />
+        <Route path='/login' element={<Login setUser={setUser} setChatter={setChatter} />} />
         <Route path='/register' element={<Register />} />
         <Route path='/rules' element={<Rules />} />
       </Routes>

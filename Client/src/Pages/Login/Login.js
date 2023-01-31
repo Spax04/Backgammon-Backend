@@ -3,10 +3,12 @@ import { useState } from 'react'
 import '../Login/Login.css'
 import IdentityService from '../../services/IdentityService'
 import { useNavigate } from 'react-router-dom'
+import ChatService from '../../services/ChatService'
 import Cookies from 'js-cookie';
 
 const LoginForm = props => {
   const service = new IdentityService()
+  const chatService = new ChatService();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigation = useNavigate()
@@ -39,7 +41,19 @@ const LoginForm = props => {
           })
           .then(resp => {
             props.setUser(resp)
-          })
+          });
+
+
+          chatService
+            .GetChatter(resp.token)
+            .then(resp => {
+              return resp.json()
+            })
+            .then(resp => {
+              props.setChatter(resp)
+            })
+            
+          
         navigation('/')
       })
   }

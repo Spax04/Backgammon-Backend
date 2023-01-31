@@ -23,16 +23,17 @@ namespace Chat_Services
 
         public void CloseAllConnectionsAsync() => _chatRepo.CloseAllConnections();
 
-        private bool ConnectChatter(Guid chatterId, Guid chatId)
+        private bool ConnectChatter(Guid chatterOneId, Guid chatterTwoId, Guid chatId)
         {
-            _chatRepo.CreateChatAsync(chatId, chatterId, DateTime.Now);
+            _chatRepo.CreateChatAsync(chatId,  chatterOneId,  chatterTwoId, DateTime.Now);
             var chatter = _chatterRepo.GetChatterAsync(chatId);
             if (chatter != null)
                 return false;
-            _chatterRepo.SetConnectedAsync(chatterId);
+            _chatterRepo.SetConnectedAsync(chatterOneId);
+            _chatterRepo.SetConnectedAsync(chatterTwoId);
             return true;
         }
-        public async Task<bool> ConnectChatterAsync(Guid chatterId, Guid chatId) => await Task.Run(() => ConnectChatter(chatterId, chatId));
+        public async Task<bool> ConnectChatterAsync(Guid chatterOneId, Guid chatterTwoId, Guid chatId) => await Task.Run(() => ConnectChatter(chatterOneId, chatterTwoId, chatId));
 
 
         public async Task<bool> DisconnectChatterAsync(Guid chatter, Guid chatId)
