@@ -3,12 +3,19 @@ import { useState } from 'react'
 import '../Login/Login.css'
 import IdentityService from '../../services/IdentityService'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 
-const LoginForm = () => {
+const LoginForm = props => {
   const service = new IdentityService()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const navigation = useNavigate();
+  const navigation = useNavigate()
+
+  const getCookie = name => {
+    const value = `; ${document.cookie}`
+    const parts = value.split(`; ${name}=`)
+    if (parts.length === 2) return parts.pop().split(';').shift()
+  }
 
   const submit = async e => {
     const loginUser = {
@@ -17,14 +24,24 @@ const LoginForm = () => {
     }
     e.preventDefault()
 
-    await service.Login(loginUser)
-    .then((resp) =>  {
-      return resp.json()
-    }).then((resp)=>{
-      sessionStorage.setItem('id',resp.id);
-      sessionStorage.setItem('token',resp.token);
-      navigation("/");
-    })
+    await service
+      .Login(loginUser)
+      .then(resp => {
+        return resp.json()
+      })
+      .then(resp => {
+        sessionStorage.setItem('token', resp.token)
+
+        service
+          .GetUser(resp.token)
+          .then(resp => {
+            return resp.json()
+          })
+          .then(resp => {
+            props.setUser(resp)
+          })
+        navigation('/')
+      })
   }
 
   return (

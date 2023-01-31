@@ -27,7 +27,7 @@ namespace Identity_DAL.Authorization
             List<Claim> claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("id",user.UserId!.ToString()),
+                new Claim("userId",user.UserId!.ToString()),
                 new Claim("name",user.Username!),
                 new Claim("email", user.Email!)
             };
@@ -39,7 +39,7 @@ namespace Identity_DAL.Authorization
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddDays(365),
                 signingCredentials: creds);
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);

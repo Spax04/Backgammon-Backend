@@ -1,49 +1,38 @@
 import React from 'react'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import Chat from '../../components/ContactsScreen/Chat/Chat'
 import SideBar from '../../components/ContactsScreen/SideBar/SideBar'
-import "../Home/Home.css"
+import '../Home/Home.css'
 import { useNavigate } from 'react-router-dom'
 import IdentityService from '../../services/IdentityService'
 
-const Home = (props) => {
+function Home (props) {
+  const service = new IdentityService()
 
-  // const service = new IdentityService();
+  const navigate = useNavigate()
+  const [innetUser, setInnerUser] = useState(null)
 
-   const navigate = useNavigate();
-   const [user,setUser] = useState(null);
-
-  useEffect(()=>{
-
-    let userId = sessionStorage.getItem('id');
-     if(userId ==="" || userId === null ){
-       navigate("/login");
-     }
-
-  //   service.GetUser(userId)
-  //   .then((resp) =>  {
-  //     return resp.json()
-  //   })
-  //   .then((resp)=>{
-  //     console.log(resp)
-  //     setUser(resp)
-  //     console.log(user)
-  //   })
-
-
-  
-   },[])
+  useEffect(() => {
+    let token = sessionStorage.getItem('token')
+    if (token === '' || token === null) {
+      navigate('/login')
+    }else{
+      setInnerUser(props.user)
+    }
+  }, [])
 
   return (
     <div className='home'>
-    
+      {props.user ? (
         <Container>
-            <SideBar user={props.user}/>
-            <Chat />
+          <SideBar user={props.user} />
+          <Chat />
         </Container>
+      ) : (
+        <div></div>
+      )}
     </div>
   )
 }
 export default Home
-

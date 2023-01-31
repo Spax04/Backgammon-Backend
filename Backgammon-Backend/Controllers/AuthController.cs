@@ -11,6 +11,7 @@ namespace Backgammon_Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private IAuthRepository _authRepository;
@@ -34,12 +35,30 @@ namespace Backgammon_Backend.Controllers
         {
             if (request == null)
                 return BadRequest("User input error");
+            AuthenticationResponse authResponse;
+            try
+            {
+                 authResponse = (AuthenticationResponse)await _authRepository.LoginAsync(request);
+            }
+            catch
+            {
+                return BadRequest("User input error");
+            }
+            
+            Response.Cookies.Append("jwt", authResponse.Token!, new CookieOptions { HttpOnly = true });
 
             return Ok(await _authRepository.LoginAsync(request));
         }
-        
+
+        [HttpPost("logout")]
+        public async Task<ActionResult> Logout()
+        {
+           Response.Cookies.Delete("jwt");
+
+            return Ok( "Coockies was deleted");
+        }
+
         [HttpGet("getTest")]
-        [Authorize]
         public  ActionResult<IEnumerable<User>> Get()
         {
 

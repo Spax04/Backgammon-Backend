@@ -1,26 +1,27 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import Chats from "./Chats";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Search from "./Search";
 import SideBarNavBar from "./SideBarNavBar";
 
 const SideBar = (props) => {
 
   const [newRender,setRender] = useState(false);
-  if(props.user != null){
-    setRender(true)
-  }
+ 
+const [user,setUser] = useState(null);
 
+useEffect(()=>{
+  
+},[])
 
   return <div>
-    {newRender ? <div className="sidebar">
-      
-      <SideBarNavBar user={props.user}/>
+     <div className="sidebar">
+      <SideBarNavBar username={props.user.username}/>
       <Search />
       <Chats />
   
-    </div> : <div></div> }
+    </div>
   </div>
 
     

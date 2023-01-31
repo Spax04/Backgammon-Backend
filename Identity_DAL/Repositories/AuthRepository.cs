@@ -84,10 +84,10 @@ namespace Backgammon_Backend.Services
 
             AuthenticationResponse response = new AuthenticationResponse()
             {
-                Id = user.UserId,
+               Token = _jwtUtilits.CreateToken(user)
             };
             
-            response.Token = _jwtUtilits.CreateToken(user);
+
             //response.RefreshToken = _jwtUtilits.RefreshToken();
             return response;
         }

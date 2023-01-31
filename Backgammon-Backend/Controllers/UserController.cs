@@ -7,6 +7,7 @@ using Identity_Models.Users.Dto.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Backgammon_Backend.Controllers
 {
@@ -21,13 +22,19 @@ namespace Backgammon_Backend.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<UserResponse>> Get(string userId)
+        [HttpGet]
+        public async Task<ActionResult<UserResponse>> Get()
         {
-            if (userId == string.Empty || userId == null)
-                return BadRequest("User input error");
+            /*if (token == string.Empty || token == null)
+                return BadRequest("User input error");*/
 
-            return Ok(await _userRepository.GetUserByIdAsync(userId));
+            var testToken = Request.Cookies["jwt"];
+
+            var tokenCheck = new JwtSecurityToken(testToken);
+            string id = tokenCheck.Claims.First(x => x.Type == "userId").Value;
+
+
+            return Ok(await _userRepository.GetUserByIdAsync(id));
         }
     }
 }
