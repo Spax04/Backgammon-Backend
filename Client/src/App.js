@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/Navbar'
 import Register from '../src/Pages/Register/Register'
 import Login from '../src/Pages/Login/Login'
 import Home from '../src/Pages/Home/Home'
+import Rules from './Pages/Rules/Rules'
 
 function App () {
   const service = new IdentityService()
@@ -28,14 +29,12 @@ function App () {
   }
 
   useEffect(() => {
-   
-      let token = sessionStorage.getItem('token')
-      if (token === '' || token === null) {
-        navigate('/login')
-      } else {
-        getUserFromApi(token)
-      }
-   
+    let token = sessionStorage.getItem('token')
+    if (token === '' || token === null) {
+      navigate('/login')
+    } else {
+      getUserFromApi(token)
+    }
   }, [])
 
   return (
@@ -50,6 +49,7 @@ function App () {
         <Route path='/' exact element={<Home user={user} />} />
         <Route path='/login' element={<Login setUser={setUser} />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/rules' element={<Rules />} />
       </Routes>
     </div>
   )
