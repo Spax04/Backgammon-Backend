@@ -63,10 +63,11 @@ const LoginForm = props => {
             onChange={e => setPassword(e.target.value)}
             placeholder='Enter your Password'
           />
-        </div>
-        <button className='row' type='submit'>
+          <button id='submitBtn' type='submit'>
           Sign in
         </button>
+        </div>
+        
         <Register />
         <OtherMethods />
       </div>

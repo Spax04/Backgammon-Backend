@@ -74,7 +74,7 @@ html{
   color: rgba(187,187,187,0.9);
 }
 
-.row button{
+.row #submitBtn{
   border-radius: 25px;
   width: 80%;
   height: 40px;
@@ -86,6 +86,7 @@ html{
   border: 0px;
   cursor: pointer;
   transition: opacity 0.25s ease-out;
+  margin-top: 1.5rem;
 }
 
 

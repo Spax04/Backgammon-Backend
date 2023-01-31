@@ -28,8 +28,6 @@ class IdentityService {
             credentials : "include",
             body : JSON.stringify(data)
           })
-          const newToken = Cookies.get('jwt');
-      console.log(newToken)
           return response
     }
 
@@ -43,8 +41,7 @@ class IdentityService {
     }
 
     async GetUser(token){ // DEBUG OUTSIDE
-      const newToken = Cookies.get('jwt');
-      console.log(newToken)
+
       const response = fetch(`http://localhost:5032/api/User/${token}`,{
             method : "GET",
             headers : {'Content-Type':"application/json", "Authorization": "bearer "+ sessionStorage.getItem('token')},

@@ -21,16 +21,16 @@ namespace Backgammon_Backend.Controllers
         {
             _userRepository = userRepository;
         }
-
-        [HttpGet]
-        public async Task<ActionResult<UserResponse>> Get()
+        
+        [HttpGet("{token}")]
+        public async Task<ActionResult<UserResponse>> Get(string token)
         {
-            /*if (token == string.Empty || token == null)
-                return BadRequest("User input error");*/
+            if (token == string.Empty || token == null)
+                return BadRequest("User input error");
 
-            var testToken = Request.Cookies["jwt"];
+            //var testToken = Request.Cookies["jwt"];
 
-            var tokenCheck = new JwtSecurityToken(testToken);
+            var tokenCheck = new JwtSecurityToken(token);
             string id = tokenCheck.Claims.First(x => x.Type == "userId").Value;
 
 
