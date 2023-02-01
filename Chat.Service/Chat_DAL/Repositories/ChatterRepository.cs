@@ -37,9 +37,9 @@ namespace Chat_DAL.Repositories
         // FINISHED
         //
 
-        public async Task<bool> isChatterExistAsync(Guid chatterId)
+        public bool isChatterExistAsync(Guid chatterId)
         {
-            var chatter = await _context.Chatters!.FindAsync(chatterId);
+            var chatter = _context.Chatters!.Find(chatterId);
             if (chatter == null)
                 return false;
             else

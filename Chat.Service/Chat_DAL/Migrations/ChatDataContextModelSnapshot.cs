@@ -45,6 +45,10 @@ namespace Chat_DAL.Migrations
 
                     b.HasIndex("ChatterId");
 
+                    b.HasIndex("ChatterOneId");
+
+                    b.HasIndex("ChatterTwoId");
+
                     b.ToTable("Chats");
                 });
 
@@ -111,6 +115,18 @@ namespace Chat_DAL.Migrations
                     b.HasOne("Chat_Models.Models.Chatter", null)
                         .WithMany("Chats")
                         .HasForeignKey("ChatterId");
+
+                    b.HasOne("Chat_Models.Models.Chatter", "ChatterOne")
+                        .WithMany()
+                        .HasForeignKey("ChatterOneId");
+
+                    b.HasOne("Chat_Models.Models.Chatter", "ChatterTwo")
+                        .WithMany()
+                        .HasForeignKey("ChatterTwoId");
+
+                    b.Navigation("ChatterOne");
+
+                    b.Navigation("ChatterTwo");
                 });
 
             modelBuilder.Entity("Chat_Models.Models.Message", b =>

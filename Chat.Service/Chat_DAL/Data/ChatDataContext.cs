@@ -1,5 +1,6 @@
 ﻿using Chat_Models.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Chat_DAL.Data
 {
@@ -17,6 +18,20 @@ namespace Chat_DAL.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            /*  builder.Entity<Chatter>()
+         .HasMany(ch => ch.Chats)
+         .WithOne(c => c.ChatterOne)
+         .HasForeignKey(c => c.ChatterOneId);
+
+              builder.Entity<Chatter>()
+                  .HasMany(ch => ch.Chats)
+                  .WithOne(c => c.ChatterTwo)
+                  .HasForeignKey(c => c.ChatterTwoId);*/
+
+            builder.Entity<Chatter>()
+        .HasMany(ch => ch.Chats)
+        .WithOne();
         }
     }
 }

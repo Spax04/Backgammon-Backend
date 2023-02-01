@@ -33,15 +33,18 @@ namespace Backgammon_ChatServer.Controllers
             string id = tokenCheck.Claims.First(x => x.Type == "userId").Value;
             string name = tokenCheck.Claims.First(x => x.Type == "name").Value;
 
-            if (!Guid.TryParse(id, out var userIdDb))
+            Guid guid = Guid.Parse(id);
+
+            if (guid != Guid.Empty)
             {
-                if (!(await _chatterRepository.isChatterExistAsync(userIdDb)))
+                if (!(_chatterRepository.isChatterExistAsync(guid)))
                 {
-                    await _chatterRepository.AddChatterAsync(userIdDb, name);
+                    await _chatterRepository.AddChatterAsync(guid, name);
                 }
             }
 
-            return Ok(await _chatterRepository.GetChatterAsync(userIdDb));
+           
+            return Ok(await _chatterRepository.GetChatterAsync(guid));
         }
     }
 }

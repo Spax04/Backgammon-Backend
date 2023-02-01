@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Chat_DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class second : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,6 +41,16 @@ namespace Chat_DAL.Migrations
                     table.ForeignKey(
                         name: "FK_Chats_Chatters_ChatterId",
                         column: x => x.ChatterId,
+                        principalTable: "Chatters",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Chats_Chatters_ChatterOneId",
+                        column: x => x.ChatterOneId,
+                        principalTable: "Chatters",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Chats_Chatters_ChatterTwoId",
+                        column: x => x.ChatterTwoId,
                         principalTable: "Chatters",
                         principalColumn: "Id");
                 });
@@ -85,6 +95,16 @@ namespace Chat_DAL.Migrations
                 name: "IX_Chats_ChatterId",
                 table: "Chats",
                 column: "ChatterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chats_ChatterOneId",
+                table: "Chats",
+                column: "ChatterOneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chats_ChatterTwoId",
+                table: "Chats",
+                column: "ChatterTwoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_ChatID",

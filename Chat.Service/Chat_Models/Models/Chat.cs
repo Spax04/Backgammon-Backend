@@ -13,9 +13,9 @@ namespace Chat_Models.Models
         public DateTime StartedAt { get; set; }
         public DateTime EndedAt { get; set; }
 
-        [ForeignKey("ChatterOneId"),NotMapped]
+        [ForeignKey("ChatterOneId")]
         public virtual Chatter? ChatterOne { get; set; }
-        [ForeignKey("ChatterTwoId"), NotMapped]
+        [ForeignKey("ChatterTwoId")]
         public virtual Chatter? ChatterTwo { get; set; }
         public virtual ICollection<Message>? Messages { get; set; }
 

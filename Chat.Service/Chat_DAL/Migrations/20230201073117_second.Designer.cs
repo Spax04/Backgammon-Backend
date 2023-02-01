@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chat_DAL.Migrations
 {
     [DbContext(typeof(ChatDataContext))]
-    [Migration("20230131183720_init")]
-    partial class init
+    [Migration("20230201073117_second")]
+    partial class second
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,10 @@ namespace Chat_DAL.Migrations
                     b.HasKey("ChatId");
 
                     b.HasIndex("ChatterId");
+
+                    b.HasIndex("ChatterOneId");
+
+                    b.HasIndex("ChatterTwoId");
 
                     b.ToTable("Chats");
                 });
@@ -113,6 +117,18 @@ namespace Chat_DAL.Migrations
                     b.HasOne("Chat_Models.Models.Chatter", null)
                         .WithMany("Chats")
                         .HasForeignKey("ChatterId");
+
+                    b.HasOne("Chat_Models.Models.Chatter", "ChatterOne")
+                        .WithMany()
+                        .HasForeignKey("ChatterOneId");
+
+                    b.HasOne("Chat_Models.Models.Chatter", "ChatterTwo")
+                        .WithMany()
+                        .HasForeignKey("ChatterTwoId");
+
+                    b.Navigation("ChatterOne");
+
+                    b.Navigation("ChatterTwo");
                 });
 
             modelBuilder.Entity("Chat_Models.Models.Message", b =>
