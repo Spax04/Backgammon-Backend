@@ -26,7 +26,7 @@ namespace Chat_Services
         private bool ConnectChatter(Guid chatterOneId, Guid chatterTwoId, Guid chatId)
         {
             _chatRepo.CreateChatAsync(chatId,  chatterOneId,  chatterTwoId, DateTime.Now);
-            var chatter = _chatterRepo.GetChatterAsync(chatId);
+            var chatter = _chatterRepo.GetChatterToClientAsync(chatId);
             if (chatter != null)
                 return false;
             _chatterRepo.SetConnectedAsync(chatterOneId);
@@ -50,7 +50,7 @@ namespace Chat_Services
 
         private Chatter GetChatter(Guid chatterId)
         {
-            var chatter = _chatterRepo.GetChatterAsync(chatterId).Result;
+            var chatter = _chatterRepo.GetChatterToClientAsync(chatterId).Result;
             return chatter;
         }
         public async Task<Chatter> GetChatterAsync(Guid chatterId) => await Task.Run(() => GetChatter(chatterId));
@@ -72,7 +72,7 @@ namespace Chat_Services
 
         public async Task<Chatter> GetOrAddChatterAsync(Guid chatterId, string name)
         {
-            var chatter = await _chatterRepo.GetChatterAsync(chatterId);
+            var chatter = await _chatterRepo.GetChatterToClientAsync(chatterId);
             if (chatter != null)
                 return chatter;
 

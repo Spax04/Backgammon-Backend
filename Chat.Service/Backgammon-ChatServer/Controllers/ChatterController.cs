@@ -2,6 +2,7 @@
 using Chat_DAL.Repositories.interfaces;
 using Chat_Models.Helpers;
 using Chat_Models.Models;
+using Chat_Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace Backgammon_ChatServer.Controllers
     public class ChatterController : ControllerBase
     {
         readonly IChatterRepository _chatterRepository;
+        readonly IChatService _chatService;
         readonly ChatDataContext _context;
         public ChatterController(IChatterRepository chatterRepository, ChatDataContext context)
         {
@@ -41,10 +43,19 @@ namespace Backgammon_ChatServer.Controllers
                 {
                     await _chatterRepository.AddChatterAsync(guid, name);
                 }
-            }
-
-           
-            return Ok(await _chatterRepository.GetChatterAsync(guid));
+            }           
+            return Ok(await _chatterRepository.GetChatterToClientAsync(guid));
         }
+
+        //[HttpGet]
+        //public async Task<IEnumerable<Chatter>> GetChattersOnline(string chatId)
+        //{
+        //    Guid chatGuid = Guid.Parse(chatId);
+        //    if (chatGuid != Guid.Empty)
+        //    {
+        //        return Ok(await _chatService.GetChattersAsync(chatGuid));
+        //    }
+        //}
+
     }
 }

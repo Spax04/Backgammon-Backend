@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chat_DAL\Chat_DAL.csproj" />
+    <ProjectReference Include="..\Chat_Services\Chat_Services.csproj" />
   </ItemGroup>
 
 </Project>

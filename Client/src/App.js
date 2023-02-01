@@ -41,6 +41,7 @@ function App () {
         })
         .then(resp => {
           setChatter(resp)
+          console.log(chatter)
         })
     }
   }
