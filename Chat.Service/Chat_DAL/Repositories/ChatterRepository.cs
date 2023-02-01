@@ -46,20 +46,23 @@ namespace Chat_DAL.Repositories
                 return true;
         }
 
-        private Chatter GetChatter(Guid chatterId)
+        private async Task<Chatter> GetChatterToClient(Guid chatterId)
         {
             var chatter = _context.Chatters!.Find(chatterId);
             if (chatter == null)
                 throw new ArgumentException("Not Found");
 
+            await SetConnectedAsync(chatterId);
+
             return new Chatter
             {
                 Id = (Guid)chatter!.Id!,
                 Name = chatter.Name,
-                IsConnected = chatter.IsConnected
+                IsConnected = true
             }; 
+
         }
-        public async Task<Chatter> GetChatterAsync(Guid chatterId) => await Task.Run(() => GetChatter(chatterId));
+        public async Task<Chatter> GetChatterToClientAsync(Guid chatterId) => await Task.Run(() => GetChatterToClient(chatterId));
 
         // FINISHED
         private IEnumerable<Chatter> GetChatters()

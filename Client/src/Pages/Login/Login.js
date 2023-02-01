@@ -13,12 +13,6 @@ const LoginForm = props => {
   const [password, setPassword] = useState('')
   const navigation = useNavigate()
 
-  const getCookie = name => {
-    const value = `; ${document.cookie}`
-    const parts = value.split(`; ${name}=`)
-    if (parts.length === 2) return parts.pop().split(';').shift()
-  }
-
   const submit = async e => {
     const loginUser = {
       username,
@@ -51,7 +45,9 @@ const LoginForm = props => {
             })
             .then(resp => {
               props.setChatter(resp)
+              console.log(resp)
             })
+
             
           
         navigation('/')

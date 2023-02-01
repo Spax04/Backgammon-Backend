@@ -7,39 +7,8 @@ const LOGIN = process.env.LOGIN;
 const USER_REGEX = process.env.USER_REGEX;
 const PWD_REGEX = process.env.PWD_REGEX;
 
-
-
-
 class ChatService {
   
-    async Register(data){
-      const response = fetch("http://localhost:5032/api/Auth/register",{
-            method:"POST",
-            headers:{'Content-Type':"application/json"},
-            body:JSON.stringify(data)
-          })
-          return response
-    }
-
-    async Login(data){
-      const response = fetch("http://localhost:5032/api/Auth/login",{
-            method : "POST",
-            headers : {'Content-Type':"application/json"},
-            credentials : "include",
-            body : JSON.stringify(data)
-          })
-          return response
-    }
-
-    async Logout(){
-      const response = fetch("http://localhost:5032/api/Auth/logout",{
-            method : "POST",
-            headers : {'Content-Type':"application/json", "Authorization": "bearer "+ sessionStorage.getItem('token')},
-            credentials : "include",
-          })
-          return response
-    }
-
     async GetChatter(token){ // DEBUG OUTSIDE
 
       const response = fetch(`http://localhost:7112/api/Chatter/${token}`,{
