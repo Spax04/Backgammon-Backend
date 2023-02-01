@@ -18,6 +18,7 @@ function App () {
   const [isRendered, setIsRendered] = useState(false)
   const [user, setUser] = useState(null);
   const [chatter, setChatter] = useState(null)
+  const [chattersOnline, setChattersOnline] = useState([])
 
   const getUserFromApi = token => {
     if (token == null) {
@@ -46,6 +47,20 @@ function App () {
     }
   }
 
+  const getChatterOnlineFromApi = () => {
+    
+    chatService
+      .GetChattersOnline()
+      .then(resp => {
+        return resp.json()
+      })
+      .then(resp => {
+        setChattersOnline(resp)
+        console.log(chattersOnline)
+      })
+    
+  }
+
   useEffect(() => {
     let token = sessionStorage.getItem('token')
     if (token === '' || token === null) {
@@ -53,6 +68,7 @@ function App () {
     } else {
       getUserFromApi(token)
       getChatterFromApi(token)
+      getChatterOnlineFromApi()
     }
   }, [])
 
@@ -65,7 +81,7 @@ function App () {
       )}
 
       <Routes>
-        <Route path='/' exact element={<Home user={user} chatter={chatter} />} />
+        <Route path='/' exact element={<Home user={user} chatter={chatter} chattersOnline={chattersOnline} />} />
         <Route path='/login' element={<Login setUser={setUser} setChatter={setChatter} />} />
         <Route path='/register' element={<Register />} />
         <Route path='/rules' element={<Rules />} />

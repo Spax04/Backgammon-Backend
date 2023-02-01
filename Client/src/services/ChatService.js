@@ -9,9 +9,20 @@ const PWD_REGEX = process.env.PWD_REGEX;
 
 class ChatService {
   
-    async GetChatter(token){ // DEBUG OUTSIDE
+    async GetChatter(token){ 
 
       const response = fetch(`http://localhost:7112/api/Chatter/${token}`,{
+            method : "GET",
+            headers : {'Content-Type':"application/json", "Authorization": "bearer "+ sessionStorage.getItem('token')},
+            credentials : "include",
+            
+          })
+          return response
+    }
+
+    async GetChattersOnline(){ 
+
+      const response = fetch(`http://localhost:7112/api/Chatter/`,{
             method : "GET",
             headers : {'Content-Type':"application/json", "Authorization": "bearer "+ sessionStorage.getItem('token')},
             credentials : "include",

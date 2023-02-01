@@ -47,15 +47,11 @@ namespace Backgammon_ChatServer.Controllers
             return Ok(await _chatterRepository.GetChatterToClientAsync(guid));
         }
 
-        //[HttpGet]
-        //public async Task<IEnumerable<Chatter>> GetChattersOnline(string chatId)
-        //{
-        //    Guid chatGuid = Guid.Parse(chatId);
-        //    if (chatGuid != Guid.Empty)
-        //    {
-        //        return Ok(await _chatService.GetChattersAsync(chatGuid));
-        //    }
-        //}
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Chatter>>> GetChattersAreOnline()
+        {
+            return  Ok( await _chatterRepository.GetChattersAreOnlineAsync());
+        }
 
     }
 }

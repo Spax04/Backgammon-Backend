@@ -12,7 +12,7 @@ namespace Chat_DAL.Repositories.interfaces
     {
         Task<Chatter> AddChatterAsync(Guid chatterId, string name);
         Task<Chatter> GetChatterToClientAsync(Guid chatterId);
-        Task<IEnumerable<Chatter>> GetChattersAsync();
+        Task<IEnumerable<Chatter>> GetChattersAreOnlineAsync();
         bool isChatterExistAsync(Guid chatterId);
         Task SetConnectedAsync(Guid cahatterId);
         Task SetDisconnectedAsync(Guid cahatterId);

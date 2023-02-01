@@ -65,17 +65,11 @@ namespace Chat_DAL.Repositories
         public async Task<Chatter> GetChatterToClientAsync(Guid chatterId) => await Task.Run(() => GetChatterToClient(chatterId));
 
         // FINISHED
-        private IEnumerable<Chatter> GetChatters()
+        private IEnumerable<Chatter> GetChattersAreOnline()
         {
-            return (IEnumerable<Chatter>)Task.FromResult<IEnumerable<Chatter>>(_context!.Chatters!.Select(chatter => new Chatter
-            {
-                Id = (Guid)chatter!.Id!,
-                Name = chatter.Name,
-                IsConnected = chatter.IsConnected,
-                LastSeen = chatter!.Chats!.Max(c => c.EndedAt)
-            }).ToList());
+            return _context!.Chatters!.Where(x => x.IsConnected == true).ToList();
         }
-        public async Task<IEnumerable<Chatter>> GetChattersAsync() => await Task.Run(() => GetChatters());
+        public async Task<IEnumerable<Chatter>> GetChattersAreOnlineAsync() => await Task.Run(() => GetChattersAreOnline());
 
         // FINISHED
 
