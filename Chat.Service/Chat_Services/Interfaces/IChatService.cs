@@ -13,9 +13,9 @@ namespace Chat_Services.Interfaces
         Task<Chatter> GetOrAddChatterAsync(Guid chaterId, string name);
         Task<DateTime> GetLastSeenAsync(Guid chatterId);
         Task<Chatter> GetChatterAsync(Guid chatterId);
-        Task<bool> ConnectChatterAsync(Guid chatterOneId, Guid chatterTwoId, Guid chatId);
-        Task<bool> DisconnectChatterAsync(Guid chater, Guid chatId);
-        Task<IEnumerable<Chatter>> GetChattersAsync(Guid chatId);
+        Task<bool> ConnectChatterAsync(Guid chatterId, string chatId);
+        Task<bool> DisconnectChatterAsync(Guid chatter, string chatId);
+        Task<IEnumerable<Chatter>> GetChattersAsync(string chatId);
         void CloseAllConnectionsAsync();
     }
 }

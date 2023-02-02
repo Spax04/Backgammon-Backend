@@ -11,7 +11,7 @@ namespace Chat_DAL.Data
 
         }
         
-        public DbSet<Chat>? Chats { get; set; }
+        public DbSet<ChatConnection>? Chats { get; set; }
         public DbSet<Message>? Messages { get; set; }
         public DbSet<Chatter>? Chatters { get; set; }
 
@@ -19,19 +19,19 @@ namespace Chat_DAL.Data
         {
             base.OnModelCreating(builder);
 
-            /*  builder.Entity<Chatter>()
-         .HasMany(ch => ch.Chats)
-         .WithOne(c => c.ChatterOne)
-         .HasForeignKey(c => c.ChatterOneId);
-
-              builder.Entity<Chatter>()
-                  .HasMany(ch => ch.Chats)
-                  .WithOne(c => c.ChatterTwo)
-                  .HasForeignKey(c => c.ChatterTwoId);*/
-
             builder.Entity<Chatter>()
-        .HasMany(ch => ch.Chats)
-        .WithOne();
+       .HasMany(ch => ch.Chats)
+       .WithOne(c => c.Chatter)
+       .HasForeignKey(c => c.ChatterId);
+/*
+            builder.Entity<Chatter>()
+                .HasMany(ch => ch.Chats)
+                .WithOne(c => c.ChatterTwo)
+                .HasForeignKey(c => c.ChatterTwoId);*/
+
+            /*            builder.Entity<Chatter>()
+                    .HasMany(ch => ch.Chats)
+                    .WithOne();*/
         }
     }
 }

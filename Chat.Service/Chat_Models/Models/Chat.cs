@@ -3,20 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chat_Models.Models
 {
-    public class Chat
+    public class ChatConnection
     {
         [Key]
-        public Guid? ChatId { get; set; }
-        public Guid? ChatterOneId { get; set; }
-        public Guid? ChatterTwoId { get; set; }
+        public string ChatId { get; set; }
+        public Guid ChatterId { get; set; }
         public bool IsClosed { get; set; }
         public DateTime StartedAt { get; set; }
         public DateTime EndedAt { get; set; }
 
-        [ForeignKey("ChatterOneId")]
-        public virtual Chatter? ChatterOne { get; set; }
-        [ForeignKey("ChatterTwoId")]
-        public virtual Chatter? ChatterTwo { get; set; }
+        [ForeignKey("ChatterId")]
+        public virtual Chatter? Chatter { get; set; }
         public virtual ICollection<Message>? Messages { get; set; }
 
     }

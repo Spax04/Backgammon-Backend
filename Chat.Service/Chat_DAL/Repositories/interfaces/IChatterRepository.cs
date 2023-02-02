@@ -11,7 +11,7 @@ namespace Chat_DAL.Repositories.interfaces
     public interface IChatterRepository
     {
         Task<Chatter> AddChatterAsync(Guid chatterId, string name);
-        Task<Chatter> GetChatterToClientAsync(Guid chatterId);
+        Task<Chatter> GetChatterAsync(Guid chatterId);
         Task<IEnumerable<Chatter>> GetChattersAreOnlineAsync();
         bool isChatterExistAsync(Guid chatterId);
         Task SetConnectedAsync(Guid cahatterId);

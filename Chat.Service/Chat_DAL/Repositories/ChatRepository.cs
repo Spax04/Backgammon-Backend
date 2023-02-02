@@ -20,13 +20,12 @@ namespace Chat_DAL.Repositories
         }
 
         // FINISHED
-        private Chat CreateChat(Guid chatId, Guid chatterOneId, Guid chatterTwoId, DateTime startedAt)
+        private ChatConnection CreateChatConnection(string chatId, Guid chatterId, DateTime startedAt)
         {
-            Chat newChat = new Chat
+            ChatConnection newChat = new ChatConnection
             {
                 ChatId = chatId,
-                ChatterOneId = chatterOneId,
-                ChatterTwoId = chatterTwoId,
+                ChatterId = chatterId,
                 StartedAt = startedAt,
                 IsClosed = false
             };
@@ -35,53 +34,51 @@ namespace Chat_DAL.Repositories
 
             return newChat;
         }
-        public async Task<Chat> CreateChatAsync(Guid chatId, Guid chatterOneId, Guid chatterTwoId, DateTime startedAt) => await Task.Run(() => CreateChat(chatId,  chatterOneId,  chatterTwoId, startedAt));
+        public async Task<ChatConnection> CreateChatConnectionAsync(string chatId, Guid chatterId, DateTime startedAt) => await Task.Run(() => CreateChatConnection(chatId,  chatterId,   startedAt));
 
         // FINISHED
 
         
 
         // FINISHED
-        private Chat GetChatById(Guid chatId)
+        private ChatConnection GetChatById(string chatId)
         {
             var chat = _context!.Chats!.FirstOrDefault(c => c.ChatId == chatId);
             if(chat == null)
                 throw new ArgumentException("Not Found");
 
-            return new Chat
+            return new ChatConnection
             {
                 ChatId = chat.ChatId,
-                ChatterTwoId = chat.ChatterTwoId!,
-                ChatterOneId = chat.ChatterOneId!,
+                ChatterId = chat.ChatterId!,
                 IsClosed= chat.IsClosed,
                 StartedAt = chat.StartedAt,
                 EndedAt = chat.EndedAt
             };
         }
-        public async Task<Chat> GetChatByIdAsync(Guid chatId) => await Task.Run(() => GetChatById(chatId));
+        public async Task<ChatConnection> GetChatByIdAsync(string chatId) => await Task.Run(() => GetChatById(chatId));
 
         // FINISHED
-        private IEnumerable<Chat> GetAllChatsByUserId(Guid chatterId)
+        private IEnumerable<ChatConnection> GetAllChatsByUserId(Guid chatterId)
         {
 
             var allChats = _context!.Chatters!.Find(chatterId)!
                 .Chats!
-                .Select(u => new Chat
+                .Select(u => new ChatConnection
                 {
                     ChatId = u.ChatId,
-                    ChatterOneId = u.ChatterOneId!,
-                    ChatterTwoId = u.ChatterTwoId!,
+                    ChatterId = u.ChatterId!,
                     IsClosed = u.IsClosed,
                     StartedAt = u.StartedAt,
                     EndedAt = u.EndedAt
                 });
 
-             yield return (Chat)allChats;               
+             yield return (ChatConnection)allChats;               
         }
-        public async Task<IEnumerable<Chat>> GetAllChatsByUserIdAsync(Guid chatterId) => await Task.Run(() => GetAllChatsByUserId(chatterId));
+        public async Task<IEnumerable<ChatConnection>> GetAllChatsByUserIdAsync(Guid chatterId) => await Task.Run(() => GetAllChatsByUserId(chatterId));
 
 
-        public void CloseChatAsync(Guid chatId, DateTime endedAt)
+        public void CloseChatAsync(string chatId, DateTime endedAt)
         {
             var chat = _context?.Chats?.Find(chatId);
             if (chat == null)
