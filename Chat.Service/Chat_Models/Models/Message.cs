@@ -12,7 +12,7 @@ namespace Chat_Models.Models
     {
         [Key]
         public Guid MessageeID { get; set; }
-        public Guid ChatID { get; set; }
+        public string ChatID { get; set; }
         public Guid SenderId { get; set; }
         public Guid RecipientId { get; set; }
         public string? NewMessage { get; set; }

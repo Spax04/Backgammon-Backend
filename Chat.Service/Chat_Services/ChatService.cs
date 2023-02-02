@@ -55,7 +55,7 @@ namespace Chat_Services
         public async Task<Chatter> GetChatterAsync(Guid chatterId) => await Task.Run(() => GetChatter(chatterId));
 
         
-        public async Task<IEnumerable<Chatter>> GetChattersAsync(string chatId)
+        public async Task<IEnumerable<Chatter>> GetChattersAsync(string chatId) // ?????????????????
         {
             return (await _chatterRepo.GetChattersAreOnlineAsync());
                            /* .Where(c => c.Id != chatId)
