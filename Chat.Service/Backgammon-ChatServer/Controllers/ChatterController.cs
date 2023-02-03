@@ -45,7 +45,7 @@ namespace Backgammon_ChatServer.Controllers
                 return BadRequest("Guid null");
             }
             return Ok(await _chatterRepository.GetChatterAsync(guid));
-            return Ok();
+            //return Ok();
         }
 
     }
