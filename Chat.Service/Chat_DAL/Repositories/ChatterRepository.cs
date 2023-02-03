@@ -62,12 +62,12 @@ namespace Chat_DAL.Repositories
         }
         public async Task<Chatter> GetChatterAsync(Guid chatterId) => await Task.Run(() => GetChatter(chatterId));
 
-        // FINISHED
-        private IEnumerable<Chatter> GetChattersAreOnline()
+        // Return all chatter who's connected exept self user
+        private IEnumerable<Chatter> GetChattersAreOnline(Guid chatterId)
         {
-            return _context!.Chatters!.Where(x => x.IsConnected == true).ToList();
+            return _context!.Chatters!.Where(x => x.IsConnected == true && x.Id != chatterId).ToList();
         }
-        public async Task<IEnumerable<Chatter>> GetChattersAreOnlineAsync() => await Task.Run(() => GetChattersAreOnline());
+        public async Task<IEnumerable<Chatter>> GetChattersAreOnlineAsync(Guid chatterId) => await Task.Run(() => GetChattersAreOnline(chatterId));
 
         // FINISHED
 

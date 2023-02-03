@@ -10,6 +10,7 @@ namespace Chat_DAL.Repositories.interfaces
 {
     public interface IChatRepository
     {
+        ChatConnection CreateChatConnection(string chatId, Guid chatterId, DateTime startedAt);
         Task<ChatConnection> CreateChatConnectionAsync(string chatId, Guid chatterId, DateTime startedAt);
         Task<IEnumerable<ChatConnection>> GetAllChatsByUserIdAsync(Guid chatterId);
         Task<ChatConnection> GetChatByIdAsync(string chatId);       

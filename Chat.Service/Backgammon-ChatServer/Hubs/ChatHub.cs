@@ -17,10 +17,14 @@ namespace Backgammon_ChatServer.Hubs
         }
 
 
-      /*  public  async Task OnConnectedAsync(string token)
+        public override async Task OnConnectedAsync()
         {
-            if (token == string.Empty || token == null)
-                throw new ArgumentException("User input error");
+            await base.OnConnectedAsync();
+            // var token = Context.GetHttpContext().Request.Headers["Authorization"].ToString();
+            string token = Context.GetHttpContext().Request.Query["token"].ToString();
+
+            //var token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MDRmZWU5Yi1mMGMxLTQxMTAtODMwNS1jMzI2YjRmMzFkNGYiLCJ1c2VySWQiOiJlMzgxZWZkOS1mMTNjLTRiNmItOTk3ZS0zYTExYmU1NTBiOGUiLCJuYW1lIjoic3RyaW5nIiwiZW1haWwiOiJzdHJpbmciLCJleHAiOjE3MDY5NTg0NjV9._m7yCY59dQV4xQ3X0FpD6AQZ21QlnPf20dJuaHCOL7OSxed4iVnF4lVa2qZiOFAb6MiXswBr2lkZje_mXBrA9A";
+
 
             //var testToken = Request.Cookies["jwt"];
 
@@ -35,17 +39,18 @@ namespace Backgammon_ChatServer.Hubs
 
             var isFirstConnect = await _chatService.ConnectChatterAsync(chatter.Id, Context.ConnectionId);
 
-          //  var chattersWithoutCaller = await chatService.GetChattersAsync(chaterId);
+            var chattersWithoutCaller = await _chatService.GetChattersAsync(chaterId);
 
             if (isFirstConnect)
             {
                 var chatterIds = chattersWithoutCaller.Select(c => c.Id.ToString()).ToList();
 
+                // Who is online - automatacly get new user that conected
                 await Clients.Users(chatterIds).SendAsync("ChatterConnected", chatter);
             }
-
+            // Caller gets list of users online
             await Clients.Caller.SendAsync("SetChatters", chattersWithoutCaller);
-       */ //}
+        }
 
 
 

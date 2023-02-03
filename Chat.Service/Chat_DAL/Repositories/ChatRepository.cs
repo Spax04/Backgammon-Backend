@@ -20,7 +20,7 @@ namespace Chat_DAL.Repositories
         }
 
         // FINISHED
-        private ChatConnection CreateChatConnection(string chatId, Guid chatterId, DateTime startedAt)
+        public ChatConnection CreateChatConnection(string chatId, Guid chatterId, DateTime startedAt)
         {
             ChatConnection newChat = new ChatConnection
             {

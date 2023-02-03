@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import IdentityService from './services/IdentityService'
+
 import Chat from './components/Chat/Chat'
 import NavBar from './components/NavBar/Navbar'
 import Register from '../src/Pages/Register/Register'
@@ -8,17 +9,17 @@ import Login from '../src/Pages/Login/Login'
 import Home from '../src/Pages/Home/Home'
 import Rules from './Pages/Rules/Rules'
 import ChatService from './services/ChatService'
-
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 
 function App () {
   const service = new IdentityService()
-  const chatService = new ChatService();
+  const chatService = new ChatService()
 
   const navigate = useNavigate()
   const [isRendered, setIsRendered] = useState(false)
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
   const [chatter, setChatter] = useState(null)
-  const [chattersOnline, setChattersOnline] = useState([])
+  const [connection, setConnection] = useState()
 
   const getUserFromApi = token => {
     if (token == null) {
@@ -47,20 +48,6 @@ function App () {
     }
   }
 
-  const getChatterOnlineFromApi = () => {
-    
-    chatService
-      .GetChattersOnline()
-      .then(resp => {
-        return resp.json()
-      })
-      .then(resp => {
-        setChattersOnline(resp)
-        console.log(chattersOnline)
-      })
-    
-  }
-
   useEffect(() => {
     let token = sessionStorage.getItem('token')
     if (token === '' || token === null) {
@@ -68,21 +55,29 @@ function App () {
     } else {
       getUserFromApi(token)
       getChatterFromApi(token)
-      getChatterOnlineFromApi()
+      chatService.InitConnection()
+      //chatService.CloseConnection()
     }
   }, [])
 
   return (
     <div>
       {user ? (
-        <NavBar isLogedIn={true} setUser={setUser} />
+        <NavBar isLogedIn={true} setUser={setUser} setConnection={setConnection} connection={connection} />
       ) : (
-        <NavBar isLogedIn={false} setUser={setUser} />
+        <NavBar isLogedIn={false} setUser={setUser} setConnection={setConnection} connection={connection} />
       )}
 
       <Routes>
-        <Route path='/' exact element={<Home user={user} chatter={chatter} chattersOnline={chattersOnline} />} />
-        <Route path='/login' element={<Login setUser={setUser} setChatter={setChatter} />} />
+        <Route
+          path='/'
+          exact
+          element={<Home user={user} chatter={chatter} />}
+        />
+        <Route
+          path='/login'
+          element={<Login setUser={setUser} setChatter={setChatter} setConnection={setConnection} />}
+        />
         <Route path='/register' element={<Register />} />
         <Route path='/rules' element={<Rules />} />
       </Routes>

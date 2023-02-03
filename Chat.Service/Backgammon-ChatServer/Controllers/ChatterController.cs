@@ -39,14 +39,13 @@ namespace Backgammon_ChatServer.Controllers
             if (guid != Guid.Empty)
             {
                 await _chatService.GetOrAddChatterAsync(guid, name);
-            }           
+            }
+            else
+            {
+                return BadRequest("Guid null");
+            }
             return Ok(await _chatterRepository.GetChatterAsync(guid));
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Chatter>>> GetChattersAreOnline()
-        {
-            return  Ok( await _chatterRepository.GetChattersAreOnlineAsync());
+            return Ok();
         }
 
     }

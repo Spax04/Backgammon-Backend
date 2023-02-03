@@ -8,11 +8,14 @@ using Swashbuckle.AspNetCore.Filters;
 using Chat_DAL.Data;
 using Chat_DAL.Repositories.interfaces;
 using Chat_DAL.Repositories;
+using Chat_Services.Interfaces;
+using Chat_Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-
+builder.Services.AddTransient<IChatService, ChatService>();
+builder.Services.AddTransient<IMessageService, MessageService>();
 builder.Services.AddTransient<IChatRepository, ChatRepository>();
 builder.Services.AddTransient<IChatterRepository, ChatterRepository>();
 builder.Services.AddTransient<IMessageRepository, MessageRepository>();
@@ -91,5 +94,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<ChatHub>("/chat");
+app.MapHub<ChatHub>("/hub/chat");
 app.Run();

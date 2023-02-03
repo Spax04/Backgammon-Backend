@@ -25,7 +25,7 @@ namespace Chat_Services
 
         private bool ConnectChatter(Guid chatterId, string chatId)
         {
-            _chatRepo.CreateChatConnectionAsync(chatId, chatterId,  DateTime.Now);
+            _chatRepo.CreateChatConnection(chatId, chatterId,  DateTime.Now);
             var chatter = _chatterRepo.GetChatterAsync(chatterId);
             if (chatter != null)
                 return false;
@@ -55,11 +55,9 @@ namespace Chat_Services
         public async Task<Chatter> GetChatterAsync(Guid chatterId) => await Task.Run(() => GetChatter(chatterId));
 
         
-        public async Task<IEnumerable<Chatter>> GetChattersAsync(string chatId) // ?????????????????
+        public async Task<IEnumerable<Chatter>> GetChattersAsync(Guid selfChatter) 
         {
-            return (await _chatterRepo.GetChattersAreOnlineAsync());
-                           /* .Where(c => c.Id != chatId)
-                            .ToList();*/
+            return (await _chatterRepo.GetChattersAreOnlineAsync(selfChatter));
         }
 
         private DateTime GetLastSeen(Guid chatterId)
