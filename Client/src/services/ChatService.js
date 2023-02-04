@@ -11,8 +11,21 @@ const PWD_REGEX = process.env.PWD_REGEX
 
 
 class ChatService {
+ 
 
+  constructor(){
+    this.connection = new HubConnectionBuilder()
+    .withUrl(`http://localhost:7112/hub/chat/?token=${sessionStorage.getItem('token')}`, {
+      // accessTokenFactory: () => {
+      //   return sessionStorage.getItem('token')
+      // }
+      // transport: HttpTransportType.WebSockets | HttpTransportType.LongPolling
+    })
+    //.configureLogging(LogLevel.Information)
+    .build()
+  }
   
+
 
 
   async GetChatter (token) {
@@ -29,20 +42,12 @@ class ChatService {
 
   
 
-  async InitConnection() {
-    const newConnection = new HubConnectionBuilder()
-      .withUrl(`http://localhost:7112/hub/chat/?token=${sessionStorage.getItem('token')}`, {
-        // accessTokenFactory: () => {
-        //   return sessionStorage.getItem('token')
-        // }
-        // transport: HttpTransportType.WebSockets | HttpTransportType.LongPolling
-      })
-      //.configureLogging(LogLevel.Information)
-      .build()
+   InitConnection() {
+    
 
     //this.SetSignalRClientMethods()
-
-    newConnection
+      
+    this.connection
       .start()
       .then(() => {
         console.log('Connection started!')
@@ -54,14 +59,16 @@ class ChatService {
         console.error(error.message)
       })
 
-      return newConnection;
+      return this.connection;
   }
 
   async CloseConnection(connection){
-
-    connection?.stop().then(()=>{
+     this.connection.stop()
+    .then(()=>{
       console.log("Connection from signalR closed")
     })
+    
+    
 
   }
 

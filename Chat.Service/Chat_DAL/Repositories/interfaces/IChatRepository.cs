@@ -12,9 +12,9 @@ namespace Chat_DAL.Repositories.interfaces
     {
         ChatConnection CreateChatConnection(string chatId, Guid chatterId, DateTime startedAt);
         Task<ChatConnection> CreateChatConnectionAsync(string chatId, Guid chatterId, DateTime startedAt);
-        Task<IEnumerable<ChatConnection>> GetAllChatsByUserIdAsync(Guid chatterId);
+        Task<IEnumerable<ChatConnection>> GetAllChatsConnectionsByUserIdAsync(Guid chatterId);
         Task<ChatConnection> GetChatByIdAsync(string chatId);       
-        void CloseChatAsync(string ChatId, DateTime endedAt);
+        void CloseChatConnectionAsync(string ChatId, DateTime endedAt);
         void CloseAllConnections();
 
     }

@@ -20,7 +20,6 @@ function NavBar (props) {
     sessionStorage.clear('token')
     props.setUser(null)
     chatService.CloseConnection(props.connection);
-    
   }
 
   return (

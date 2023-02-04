@@ -9,12 +9,9 @@ import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 
 const LoginForm = props => {
   const service = new IdentityService()
-  const chatService = new ChatService()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigation = useNavigate()
-
-
 
   // const InitConnection = () => {
   //   const newConnection = new HubConnectionBuilder()
@@ -42,8 +39,6 @@ const LoginForm = props => {
   //     })
   // }
 
-  
-
   const submit = async e => {
     const loginUser = {
       username,
@@ -68,6 +63,8 @@ const LoginForm = props => {
             props.setUser(resp)
           })
 
+        const chatService = new ChatService()
+
         chatService
           .GetChatter(resp.token)
           .then(resp => {
@@ -88,8 +85,8 @@ const LoginForm = props => {
         //               console.log(resp + " init From Login")
         //             })
 
-        const newConnection = chatService.InitConnection();
-        props.setConnection(newConnection);
+        const newConnection = chatService.InitConnection()
+        props.setConnection(newConnection)
         navigation('/')
       })
   }

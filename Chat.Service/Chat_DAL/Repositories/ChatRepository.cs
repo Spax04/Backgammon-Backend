@@ -75,10 +75,10 @@ namespace Chat_DAL.Repositories
 
              yield return (ChatConnection)allChats;               
         }
-        public async Task<IEnumerable<ChatConnection>> GetAllChatsByUserIdAsync(Guid chatterId) => await Task.Run(() => GetAllChatsByUserId(chatterId));
+        public async Task<IEnumerable<ChatConnection>> GetAllChatsConnectionsByUserIdAsync(Guid chatterId) => await Task.Run(() => GetAllChatsByUserId(chatterId));
 
 
-        public void CloseChatAsync(string chatId, DateTime endedAt)
+        public void CloseChatConnectionAsync(string chatId, DateTime endedAt)
         {
             var chat = _context?.Chats?.Find(chatId);
             if (chat == null)

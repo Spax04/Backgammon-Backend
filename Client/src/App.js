@@ -16,7 +16,6 @@ function App () {
   const chatService = new ChatService()
 
   const navigate = useNavigate()
-  const [isRendered, setIsRendered] = useState(false)
   const [user, setUser] = useState(null)
   const [chatter, setChatter] = useState(null)
   const [connection, setConnection] = useState()
@@ -56,16 +55,16 @@ function App () {
       getUserFromApi(token)
       getChatterFromApi(token)
       chatService.InitConnection()
-      //chatService.CloseConnection()
+
     }
   }, [])
 
   return (
     <div>
       {user ? (
-        <NavBar isLogedIn={true} setUser={setUser} setConnection={setConnection} connection={connection} />
+        <NavBar isLogedIn={true} setUser={setUser}  connection={connection} />
       ) : (
-        <NavBar isLogedIn={false} setUser={setUser} setConnection={setConnection} connection={connection} />
+        <NavBar isLogedIn={false} setUser={setUser}  connection={connection} />
       )}
 
       <Routes>

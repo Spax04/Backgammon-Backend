@@ -37,8 +37,8 @@ namespace Chat_Services
 
         public async Task<bool> DisconnectChatterAsync(Guid chatter, string chatId)
         {
-            _chatRepo.CloseChatAsync(chatId, DateTime.Now);
-            var chats = await _chatRepo.GetAllChatsByUserIdAsync(chatter);
+            _chatRepo.CloseChatConnectionAsync(chatId, DateTime.Now);
+            var chats = await _chatRepo.GetAllChatsConnectionsByUserIdAsync(chatter);
             if (!chats.Any(c => !c.IsClosed))
             {
                 await _chatterRepo.SetDisconnectedAsync(chatter);
@@ -62,7 +62,7 @@ namespace Chat_Services
 
         private DateTime GetLastSeen(Guid chatterId)
         {
-            var lastSeen = _chatRepo.GetAllChatsByUserIdAsync(chatterId).Result.Max(c => c.EndedAt);
+            var lastSeen = _chatRepo.GetAllChatsConnectionsByUserIdAsync(chatterId).Result.Max(c => c.EndedAt);
             return lastSeen;
         }
         public async Task<DateTime> GetLastSeenAsync(Guid chatterId) => await Task.Run(() => GetLastSeen(chatterId));
