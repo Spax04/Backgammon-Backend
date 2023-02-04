@@ -4,14 +4,40 @@ import '../Login/Login.css'
 import IdentityService from '../../services/IdentityService'
 import { useNavigate } from 'react-router-dom'
 import ChatService from '../../services/ChatService'
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 
 const LoginForm = props => {
   const service = new IdentityService()
-  const chatService = new ChatService();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigation = useNavigate()
+
+  // const InitConnection = () => {
+  //   const newConnection = new HubConnectionBuilder()
+  //     .withUrl('http://localhost:7112/hub/chat/', {
+  //       accessTokenFactory: () => {
+  //         return sessionStorage.getItem('token')
+  //       }
+  //       // transport: HttpTransportType.WebSockets | HttpTransportType.LongPolling
+  //     })
+  //     //.configureLogging(LogLevel.Information)
+  //     .build()
+
+  //   //this.SetSignalRClientMethods()
+
+  //   newConnection
+  //     .start()
+  //     .then(() => {
+  //       console.log('Connection started!')
+  //       setConnection(newConnection);
+  //       //newConnection.invoke("OnConnectedAsync");
+  //     })
+  //     .catch(error => {
+  //       console.log('Conection closed with error fromCLient')
+  //       console.error(error.message)
+  //     })
+  // }
 
   const submit = async e => {
     const loginUser = {
@@ -35,21 +61,32 @@ const LoginForm = props => {
           })
           .then(resp => {
             props.setUser(resp)
-          });
+          })
 
+        const chatService = new ChatService()
 
-          chatService
-            .GetChatter(resp.token)
-            .then(resp => {
-              return resp.json()
-            })
-            .then(resp => {
-              props.setChatter(resp)
-              console.log(resp)
-            })
+        chatService
+          .GetChatter(resp.token)
+          .then(resp => {
+            return resp.json()
+          })
+          .then(resp => {
+            props.setChatter(resp)
+            console.log(resp)
+          })
 
-            
-          
+        // chatService
+        // .InitConnection();
+
+        // .then(resp => {
+        //               return resp.json()
+        //             })
+        //             .then(resp => {
+        //               console.log(resp + " init From Login")
+        //             })
+
+        const newConnection = chatService.InitConnection()
+        props.setConnection(newConnection)
         navigation('/')
       })
   }
@@ -74,10 +111,10 @@ const LoginForm = props => {
             placeholder='Enter your Password'
           />
           <button id='submitBtn' type='submit'>
-          Sign in
-        </button>
+            Sign in
+          </button>
         </div>
-        
+
         <Register />
         <OtherMethods />
       </div>

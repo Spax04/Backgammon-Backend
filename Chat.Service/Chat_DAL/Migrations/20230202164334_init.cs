@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Chat_DAL.Migrations
 {
-    public partial class second : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace Chat_DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     IsConnected = table.Column<bool>(type: "INTEGER", nullable: false),
                     LastSeen = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
@@ -27,13 +27,11 @@ namespace Chat_DAL.Migrations
                 name: "Chats",
                 columns: table => new
                 {
-                    ChatId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ChatterOneId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    ChatterTwoId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    ChatId = table.Column<string>(type: "TEXT", nullable: false),
+                    ChatterId = table.Column<Guid>(type: "TEXT", nullable: false),
                     IsClosed = table.Column<bool>(type: "INTEGER", nullable: false),
                     StartedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ChatterId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    EndedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,17 +40,8 @@ namespace Chat_DAL.Migrations
                         name: "FK_Chats_Chatters_ChatterId",
                         column: x => x.ChatterId,
                         principalTable: "Chatters",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Chats_Chatters_ChatterOneId",
-                        column: x => x.ChatterOneId,
-                        principalTable: "Chatters",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Chats_Chatters_ChatterTwoId",
-                        column: x => x.ChatterTwoId,
-                        principalTable: "Chatters",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,7 +49,7 @@ namespace Chat_DAL.Migrations
                 columns: table => new
                 {
                     MessageeID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ChatID = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ChatID = table.Column<string>(type: "TEXT", nullable: false),
                     SenderId = table.Column<Guid>(type: "TEXT", nullable: false),
                     RecipientId = table.Column<Guid>(type: "TEXT", nullable: false),
                     NewMessage = table.Column<string>(type: "TEXT", nullable: true),
@@ -95,16 +84,6 @@ namespace Chat_DAL.Migrations
                 name: "IX_Chats_ChatterId",
                 table: "Chats",
                 column: "ChatterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Chats_ChatterOneId",
-                table: "Chats",
-                column: "ChatterOneId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Chats_ChatterTwoId",
-                table: "Chats",
-                column: "ChatterTwoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_ChatID",

@@ -17,11 +17,10 @@ namespace Backgammon_ChatServer.Controllers
     {
         readonly IChatterRepository _chatterRepository;
         readonly IChatService _chatService;
-        readonly ChatDataContext _context;
-        public ChatterController(IChatterRepository chatterRepository, ChatDataContext context)
+        public ChatterController(IChatterRepository chatterRepository, IChatService chatService)
         {
             _chatterRepository = chatterRepository;
-            _context = context;
+            _chatService = chatService;
         }
 
         [HttpGet("{token}")]
@@ -39,18 +38,14 @@ namespace Backgammon_ChatServer.Controllers
 
             if (guid != Guid.Empty)
             {
-                if (!(_chatterRepository.isChatterExistAsync(guid)))
-                {
-                    await _chatterRepository.AddChatterAsync(guid, name);
-                }
-            }           
-            return Ok(await _chatterRepository.GetChatterToClientAsync(guid));
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Chatter>>> GetChattersAreOnline()
-        {
-            return  Ok( await _chatterRepository.GetChattersAreOnlineAsync());
+                await _chatService.GetOrAddChatterAsync(guid, name);
+            }
+            else
+            {
+                return BadRequest("Guid null");
+            }
+            return Ok(await _chatterRepository.GetChatterAsync(guid));
+            //return Ok();
         }
 
     }

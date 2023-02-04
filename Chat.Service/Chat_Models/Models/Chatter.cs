@@ -10,10 +10,10 @@ namespace Chat_Models.Models
     public class Chatter
     {
         [Key]
-        public Guid? Id { get; set; }
-        public string? Name { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
         public bool IsConnected { get; set; }
         public DateTime LastSeen { get; set; }
-        public virtual ICollection<Chat>? Chats { get; set; }
+        public virtual ICollection<ChatConnection>? Chats { get; set; }
     }
 }

@@ -17,19 +17,12 @@ namespace Chat_DAL.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.13");
 
-            modelBuilder.Entity("Chat_Models.Models.Chat", b =>
+            modelBuilder.Entity("Chat_Models.Models.ChatConnection", b =>
                 {
-                    b.Property<Guid?>("ChatId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("ChatId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ChatterId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("ChatterOneId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("ChatterTwoId")
+                    b.Property<Guid>("ChatterId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndedAt")
@@ -45,16 +38,12 @@ namespace Chat_DAL.Migrations
 
                     b.HasIndex("ChatterId");
 
-                    b.HasIndex("ChatterOneId");
-
-                    b.HasIndex("ChatterTwoId");
-
                     b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("Chat_Models.Models.Chatter", b =>
                 {
-                    b.Property<Guid?>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -65,6 +54,7 @@ namespace Chat_DAL.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -78,7 +68,8 @@ namespace Chat_DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ChatID")
+                    b.Property<string>("ChatID")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsReceived")
@@ -110,28 +101,20 @@ namespace Chat_DAL.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("Chat_Models.Models.Chat", b =>
+            modelBuilder.Entity("Chat_Models.Models.ChatConnection", b =>
                 {
-                    b.HasOne("Chat_Models.Models.Chatter", null)
+                    b.HasOne("Chat_Models.Models.Chatter", "Chatter")
                         .WithMany("Chats")
-                        .HasForeignKey("ChatterId");
+                        .HasForeignKey("ChatterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Chat_Models.Models.Chatter", "ChatterOne")
-                        .WithMany()
-                        .HasForeignKey("ChatterOneId");
-
-                    b.HasOne("Chat_Models.Models.Chatter", "ChatterTwo")
-                        .WithMany()
-                        .HasForeignKey("ChatterTwoId");
-
-                    b.Navigation("ChatterOne");
-
-                    b.Navigation("ChatterTwo");
+                    b.Navigation("Chatter");
                 });
 
             modelBuilder.Entity("Chat_Models.Models.Message", b =>
                 {
-                    b.HasOne("Chat_Models.Models.Chat", "Chat")
+                    b.HasOne("Chat_Models.Models.ChatConnection", "Chat")
                         .WithMany("Messages")
                         .HasForeignKey("ChatID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -156,7 +139,7 @@ namespace Chat_DAL.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Chat_Models.Models.Chat", b =>
+            modelBuilder.Entity("Chat_Models.Models.ChatConnection", b =>
                 {
                     b.Navigation("Messages");
                 });
