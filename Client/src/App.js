@@ -54,7 +54,7 @@ function App () {
     } else {
       getUserFromApi(token)
       getChatterFromApi(token)
-      chatService.InitConnection()
+      //chatService.InitConnection()
 
     }
   }, [])
