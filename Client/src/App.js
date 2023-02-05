@@ -8,12 +8,12 @@ import Register from '../src/Pages/Register/Register'
 import Login from '../src/Pages/Login/Login'
 import Home from '../src/Pages/Home/Home'
 import Rules from './Pages/Rules/Rules'
-import ChatService from './services/ChatService'
+import {chatService} from './services/ChatService'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 
 function App () {
   const service = new IdentityService()
-  const chatService = new ChatService()
+  //const chatService = new ChatService()
 
   const navigate = useNavigate()
   const [user, setUser] = useState(null)

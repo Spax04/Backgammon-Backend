@@ -3,7 +3,7 @@ import { useState } from 'react'
 import '../Login/Login.css'
 import IdentityService from '../../services/IdentityService'
 import { useNavigate } from 'react-router-dom'
-import ChatService from '../../services/ChatService'
+import {chatService} from '../../services/ChatService'
 import Cookies from 'js-cookie'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 
@@ -37,7 +37,7 @@ const LoginForm = props => {
             props.setUser(resp)
           })
 
-        const chatService = new ChatService()
+        //const chatService = new ChatService()
 
         chatService
           .GetChatter(resp.token)

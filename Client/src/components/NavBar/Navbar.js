@@ -5,11 +5,11 @@ import { NavLink } from 'react-router-dom'
 import { useState,useEffect } from 'react'
 import Figure from 'react-bootstrap/Figure'
 import IdentityService from '../../services/IdentityService'
-import ChatService from '../../services/ChatService'
+import {chatService} from '../../services/ChatService'
 
 function NavBar (props) {
   // const [userSignedIn,SetUserSignedIn] = useState(false)
-  const chatService = new ChatService();
+  //const chatService = new ChatService();
 
   // if(props != null){
   //   SetUserSignedIn(true)
