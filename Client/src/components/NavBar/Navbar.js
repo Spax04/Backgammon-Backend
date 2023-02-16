@@ -5,21 +5,20 @@ import { NavLink } from 'react-router-dom'
 import { useState,useEffect } from 'react'
 import Figure from 'react-bootstrap/Figure'
 import IdentityService from '../../services/IdentityService'
-import {chatService} from '../../services/ChatService'
+import ChatService from '../../services/ChatService'
 
 function NavBar (props) {
-  // const [userSignedIn,SetUserSignedIn] = useState(false)
-  //const chatService = new ChatService();
 
-  // if(props != null){
-  //   SetUserSignedIn(true)
-  // }
+  const chatService = new ChatService();
+
   const service = new IdentityService()
   const logout = () => {
     service.Logout()
     sessionStorage.clear('token')
+    localStorage.clear("USER_IDENTITY_2");
     props.setUser(null)
-    chatService.CloseConnection(props.connection);
+    chatService
+    .CloseConnection()
   }
 
   return (

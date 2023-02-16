@@ -22,7 +22,7 @@ namespace Chat_Models.Models
 
 
         [ForeignKey("ChatID")]
-        public virtual ChatConnection Chat { get; set; }
+        public virtual Connection Chat { get; set; }
 
         [ForeignKey("SenderId")]
         public virtual Chatter Sender { get; set; }

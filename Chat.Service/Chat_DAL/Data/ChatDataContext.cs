@@ -11,7 +11,7 @@ namespace Chat_DAL.Data
 
         }
         
-        public DbSet<ChatConnection>? Chats { get; set; }
+        public DbSet<Connection>? Chats { get; set; }
         public DbSet<Message>? Messages { get; set; }
         public DbSet<Chatter>? Chatters { get; set; }
 

@@ -8,74 +8,69 @@ import Register from '../src/Pages/Register/Register'
 import Login from '../src/Pages/Login/Login'
 import Home from '../src/Pages/Home/Home'
 import Rules from './Pages/Rules/Rules'
-import {chatService} from './services/ChatService'
+import ChatService from './services/ChatService'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 
 function App () {
   const service = new IdentityService()
-  //const chatService = new ChatService()
+  const chatService = new ChatService()
 
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
-  const [chatter, setChatter] = useState(null)
   const [connection, setConnection] = useState()
+  const [users,setUsers] = useState([])
 
-  const getUserFromApi = token => {
-    if (token == null) {
-      service
-        .GetUser(token)
-        .then(resp => {
-          return resp.json()
-        })
-        .then(resp => {
-          setUser(resp)
-        })
+  const StopConnection = ()=>{
+    if(connection){
+      connection
+      .stop()
+      .then(() => {
+        console.log('Connection from signalR closed')
+      })
     }
   }
 
-  const getChatterFromApi = token => {
-    if (token == null) {
-      chatService
-        .GetChatter(token)
-        .then(resp => {
-          return resp.json()
-        })
-        .then(resp => {
-          setChatter(resp)
-          console.log(chatter)
-        })
-    }
-  }
 
   useEffect(() => {
-    let token = sessionStorage.getItem('token')
-    if (token === '' || token === null) {
-      navigate('/login')
-    } else {
-      getUserFromApi(token)
-      getChatterFromApi(token)
-      //chatService.InitConnection()
+    
+      if(!user){
+        setUser(JSON.parse(localStorage.getItem("USER_IDENTITY_2")))
+      }
+      if(ChatService.connection){
+        console.log(ChatService.connection)
+      }
+      console.log(ChatService.connection)    
+     
+  }, [user])
 
-    }
-  }, [])
-
+// useEffect(()=>{
+//   if(!user){
+//     let usernew = window.localStorage.getItem("USER_IDENTITY_2")
+//     console.log(usernew);
+//     setUser(usernew)
+//   }
+//   if(!connection){
+//     //setConnection(window.localStorage.getItem("CHAT_SIGNALR_CONNECTION"))
+//   }
+  
+// },[])
   return (
     <div>
       {user ? (
-        <NavBar isLogedIn={true} setUser={setUser}  connection={connection} />
+        <NavBar isLogedIn={true} setUser={setUser}  StopConnection={StopConnection} />
       ) : (
-        <NavBar isLogedIn={false} setUser={setUser}  connection={connection} />
+        <NavBar isLogedIn={false} setUser={setUser}  StopConnection={StopConnection} />
       )}
 
       <Routes>
         <Route
           path='/'
           exact
-          element={<Home user={user} chatter={chatter} />}
+          element={<Home user={user}  setConnection={setConnection}/>}
         />
         <Route
           path='/login'
-          element={<Login setUser={setUser} setChatter={setChatter} setConnection={setConnection} />}
+          element={<Login setUser={setUser}  setConnection={setConnection} />}
         />
         <Route path='/register' element={<Register />} />
         <Route path='/rules' element={<Rules />} />

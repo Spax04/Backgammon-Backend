@@ -12,6 +12,16 @@ const PWD_REGEX = process.env.PWD_REGEX;
 
 class IdentityService {
   
+  static user;
+  
+
+  constructor () {
+    if (IdentityService.user) {
+      return IdentityService.user
+    }
+    IdentityService.user = this
+  }
+
     async Register(data){
       const response = fetch("http://localhost:5032/api/Auth/register",{
             method:"POST",

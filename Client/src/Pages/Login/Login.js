@@ -3,7 +3,7 @@ import { useState } from 'react'
 import '../Login/Login.css'
 import IdentityService from '../../services/IdentityService'
 import { useNavigate } from 'react-router-dom'
-import {chatService} from '../../services/ChatService'
+import ChatService from '../../services/ChatService'
 import Cookies from 'js-cookie'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 
@@ -32,24 +32,44 @@ const LoginForm = props => {
           .GetUser(resp.token)
           .then(resp => {
             return resp.json()
+            
           })
           .then(resp => {
             props.setUser(resp)
+            console.log(resp);
+            localStorage.setItem("USER_IDENTITY_2",JSON.stringify(resp))
           })
 
-        //const chatService = new ChatService()
+          const chatService = new ChatService()
+          let newConnection = chatService.InitConnection();
+          console.log("New connecton: " + newConnection)
+          props.setConnection(newConnection);
+      //     const newConnection = new HubConnectionBuilder()
+      //     .withUrl(
+      //       `http://localhost:7112/hub/chat/?token=${sessionStorage.getItem(
+      //         'token'
+      //       )}`,
+      //     )
+      //     //.configureLogging(LogLevel.Information)
+      //     .build()
+      //     props.setConnection(newConnection);
+      //     console.log(newConnection + " FROM LOGIN");
+      //     console.log(typeof(newConnection));
+      //     console.log(newConnection + " FROM LOGIN");
+      //     console.log(newConnection);
+      //     localStorage.setItem("CHAT_CONNECTION",newConnection)
+      //  if(newConnection){
 
-        chatService
-          .GetChatter(resp.token)
-          .then(resp => {
-            return resp.json()
-          })
-          .then(resp => {
-            props.setChatter(resp)
-            console.log(resp)
-          })
-        const newConnection = chatService.InitConnection()
-        props.setConnection(newConnection)
+      //   newConnection
+      //   .start()
+      //   .then(() => {
+      //     console.log('Connection started! From Home')
+      //   })
+      //   .catch(error => {
+      //     console.log('Conection closed with error fromCLient')
+      //     console.error(error.message)
+      //   })
+      //}
         navigation('/')
       })
   }

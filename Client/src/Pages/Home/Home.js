@@ -6,43 +6,34 @@ import SideBar from '../../components/ContactsScreen/SideBar/SideBar'
 import '../Home/Home.css'
 import { useNavigate } from 'react-router-dom'
 import IdentityService from '../../services/IdentityService'
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 
 function Home (props) {
   const service = new IdentityService()
 
   const navigate = useNavigate()
-  const [innetUser, setInnerUser] = useState(null)
+  const [connection,setConnection] = useState();
+  const [users,setUsers] = useState([])
+  
 
   useEffect(() => {
     let token = sessionStorage.getItem('token')
     if (token === '' || token === null) {
       navigate('/login')
     }else{
-      setInnerUser(props.user)
+     
+    //this.SetSignalRClientMethods()
+
+    
     }
   }, [])
-
-  const testToChat = ()=>{
-      const response = fetch(`http://localhost:7112/api/Chat/`,{
-            method : "GET",
-            headers : {'Content-Type':"application/json", "Authorization": "bearer "+ sessionStorage.getItem('token')},
-            credentials : "include",
-            
-          }).then((resp)=>{
-            return resp.json()
-          }).then((resp)=>{
-            console.log(resp)
-          })
-          
-    }
-  
 
   return (
     <div className='home'>
       {props.user ? (
         
         <Container>
-          <button onClick={testToChat}>Send Test</button>
+         
           <SideBar user={props.user} />
           <Chat />
         </Container>

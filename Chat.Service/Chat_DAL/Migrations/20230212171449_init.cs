@@ -27,7 +27,7 @@ namespace Chat_DAL.Migrations
                 name: "Chats",
                 columns: table => new
                 {
-                    ChatId = table.Column<string>(type: "TEXT", nullable: false),
+                    ConnectionId = table.Column<string>(type: "TEXT", nullable: false),
                     ChatterId = table.Column<Guid>(type: "TEXT", nullable: false),
                     IsClosed = table.Column<bool>(type: "INTEGER", nullable: false),
                     StartedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -35,7 +35,7 @@ namespace Chat_DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Chats", x => x.ChatId);
+                    table.PrimaryKey("PK_Chats", x => x.ConnectionId);
                     table.ForeignKey(
                         name: "FK_Chats_Chatters_ChatterId",
                         column: x => x.ChatterId,
@@ -64,7 +64,7 @@ namespace Chat_DAL.Migrations
                         name: "FK_Messages_Chats_ChatID",
                         column: x => x.ChatID,
                         principalTable: "Chats",
-                        principalColumn: "ChatId",
+                        principalColumn: "ConnectionId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Messages_Chatters_RecipientId",

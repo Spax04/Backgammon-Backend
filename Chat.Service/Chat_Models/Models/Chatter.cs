@@ -14,6 +14,6 @@ namespace Chat_Models.Models
         public string Name { get; set; }
         public bool IsConnected { get; set; }
         public DateTime LastSeen { get; set; }
-        public virtual ICollection<ChatConnection>? Chats { get; set; }
+        public virtual ICollection<Connection>? Chats { get; set; }
     }
 }
