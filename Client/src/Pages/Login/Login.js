@@ -13,32 +13,6 @@ const LoginForm = props => {
   const [password, setPassword] = useState('')
   const navigation = useNavigate()
 
-  // const InitConnection = () => {
-  //   const newConnection = new HubConnectionBuilder()
-  //     .withUrl('http://localhost:7112/hub/chat/', {
-  //       accessTokenFactory: () => {
-  //         return sessionStorage.getItem('token')
-  //       }
-  //       // transport: HttpTransportType.WebSockets | HttpTransportType.LongPolling
-  //     })
-  //     //.configureLogging(LogLevel.Information)
-  //     .build()
-
-  //   //this.SetSignalRClientMethods()
-
-  //   newConnection
-  //     .start()
-  //     .then(() => {
-  //       console.log('Connection started!')
-  //       setConnection(newConnection);
-  //       //newConnection.invoke("OnConnectedAsync");
-  //     })
-  //     .catch(error => {
-  //       console.log('Conection closed with error fromCLient')
-  //       console.error(error.message)
-  //     })
-  // }
-
   const submit = async e => {
     const loginUser = {
       username,
@@ -58,35 +32,44 @@ const LoginForm = props => {
           .GetUser(resp.token)
           .then(resp => {
             return resp.json()
+            
           })
           .then(resp => {
             props.setUser(resp)
+            console.log(resp);
+            localStorage.setItem("USER_IDENTITY_2",JSON.stringify(resp))
           })
 
-        const chatService = new ChatService()
+          const chatService = new ChatService()
+          let newConnection = chatService.InitConnection();
+          console.log("New connecton: " + newConnection)
+          props.setConnection(newConnection);
+      //     const newConnection = new HubConnectionBuilder()
+      //     .withUrl(
+      //       `http://localhost:7112/hub/chat/?token=${sessionStorage.getItem(
+      //         'token'
+      //       )}`,
+      //     )
+      //     //.configureLogging(LogLevel.Information)
+      //     .build()
+      //     props.setConnection(newConnection);
+      //     console.log(newConnection + " FROM LOGIN");
+      //     console.log(typeof(newConnection));
+      //     console.log(newConnection + " FROM LOGIN");
+      //     console.log(newConnection);
+      //     localStorage.setItem("CHAT_CONNECTION",newConnection)
+      //  if(newConnection){
 
-        chatService
-          .GetChatter(resp.token)
-          .then(resp => {
-            return resp.json()
-          })
-          .then(resp => {
-            props.setChatter(resp)
-            console.log(resp)
-          })
-
-        // chatService
-        // .InitConnection();
-
-        // .then(resp => {
-        //               return resp.json()
-        //             })
-        //             .then(resp => {
-        //               console.log(resp + " init From Login")
-        //             })
-
-        const newConnection = chatService.InitConnection()
-        props.setConnection(newConnection)
+      //   newConnection
+      //   .start()
+      //   .then(() => {
+      //     console.log('Connection started! From Home')
+      //   })
+      //   .catch(error => {
+      //     console.log('Conection closed with error fromCLient')
+      //     console.error(error.message)
+      //   })
+      //}
         navigation('/')
       })
   }

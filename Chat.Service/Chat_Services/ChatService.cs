@@ -23,23 +23,23 @@ namespace Chat_Services
 
         public void CloseAllConnectionsAsync() => _chatRepo.CloseAllConnections();
 
-        private bool ConnectChatter(Guid chatterId, string chatId)
+        private bool ConnectChatter(Guid chatterId, string connectionId)
         {
-            _chatRepo.CreateChatConnection(chatId, chatterId,  DateTime.Now);
+            _chatRepo.CreateChatConnection(connectionId, chatterId,  DateTime.Now);
             var chatter = _chatterRepo.GetChatterAsync(chatterId);
             if (chatter != null)
                 return false;
             _chatterRepo.SetConnectedAsync(chatterId);
             return true;
         }
-        public async Task<bool> ConnectChatterAsync(Guid chatterId, string chatId) => await Task.Run(() => ConnectChatter(chatterId,  chatId));
+        public async Task<bool> ConnectChatterAsync(Guid chatterId, string connectionId) => await Task.Run(() => ConnectChatter(chatterId,  connectionId));
 
 
-        public async Task<bool> DisconnectChatterAsync(Guid chatter, string chatId)
+        public async Task<bool> DisconnectChatterAsync(Guid chatter, string connectionId)
         {
-            _chatRepo.CloseChatConnectionAsync(chatId, DateTime.Now);
-            var chats = await _chatRepo.GetAllChatsConnectionsByUserIdAsync(chatter);
-            if (!chats.Any(c => !c.IsClosed))
+            _chatRepo.CloseChatConnectionAsync(connectionId, DateTime.Now);
+            var connections = await _chatRepo.GetAllConnectionsByUserIdAsync(chatter);
+            if (!connections.Any(c => !c.IsClosed))
             {
                 await _chatterRepo.SetDisconnectedAsync(chatter);
                 return true;
@@ -62,7 +62,7 @@ namespace Chat_Services
 
         private DateTime GetLastSeen(Guid chatterId)
         {
-            var lastSeen = _chatRepo.GetAllChatsConnectionsByUserIdAsync(chatterId).Result.Max(c => c.EndedAt);
+            var lastSeen = _chatRepo.GetAllConnectionsByUserIdAsync(chatterId).Result.Max(c => c.EndedAt);
             return lastSeen;
         }
         public async Task<DateTime> GetLastSeenAsync(Guid chatterId) => await Task.Run(() => GetLastSeen(chatterId));

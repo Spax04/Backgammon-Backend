@@ -11,37 +11,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chat_DAL.Migrations
 {
     [DbContext(typeof(ChatDataContext))]
-    [Migration("20230202164334_init")]
+    [Migration("20230212171449_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.13");
-
-            modelBuilder.Entity("Chat_Models.Models.ChatConnection", b =>
-                {
-                    b.Property<string>("ChatId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("ChatterId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("EndedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsClosed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("StartedAt")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ChatId");
-
-                    b.HasIndex("ChatterId");
-
-                    b.ToTable("Chats");
-                });
 
             modelBuilder.Entity("Chat_Models.Models.Chatter", b =>
                 {
@@ -62,6 +38,30 @@ namespace Chat_DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Chatters");
+                });
+
+            modelBuilder.Entity("Chat_Models.Models.Connection", b =>
+                {
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ChatterId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ConnectionId");
+
+                    b.HasIndex("ChatterId");
+
+                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("Chat_Models.Models.Message", b =>
@@ -103,7 +103,7 @@ namespace Chat_DAL.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("Chat_Models.Models.ChatConnection", b =>
+            modelBuilder.Entity("Chat_Models.Models.Connection", b =>
                 {
                     b.HasOne("Chat_Models.Models.Chatter", "Chatter")
                         .WithMany("Chats")
@@ -116,7 +116,7 @@ namespace Chat_DAL.Migrations
 
             modelBuilder.Entity("Chat_Models.Models.Message", b =>
                 {
-                    b.HasOne("Chat_Models.Models.ChatConnection", "Chat")
+                    b.HasOne("Chat_Models.Models.Connection", "Chat")
                         .WithMany("Messages")
                         .HasForeignKey("ChatID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -141,14 +141,14 @@ namespace Chat_DAL.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Chat_Models.Models.ChatConnection", b =>
-                {
-                    b.Navigation("Messages");
-                });
-
             modelBuilder.Entity("Chat_Models.Models.Chatter", b =>
                 {
                     b.Navigation("Chats");
+                });
+
+            modelBuilder.Entity("Chat_Models.Models.Connection", b =>
+                {
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

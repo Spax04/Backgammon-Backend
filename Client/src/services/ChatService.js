@@ -1,32 +1,23 @@
-import axios from 'axios'
-import { useState, useEffect } from 'react'
-import Cookies from 'js-cookie'
-import {HubConnectionBuilder, LogLevel} from '@microsoft/signalr'
-const API_URL = process.env.IDENTITY_API
-const REGIST = process.env.REGISTRATION
-const LOGIN = process.env.LOGIN
-const USER_REGEX = process.env.USER_REGEX
-const PWD_REGEX = process.env.PWD_REGEX
 
+import { useState, useEffect } from 'react'
+
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
+import { BehaviorSubject } from 'rxjs';
 
 
 class ChatService {
- 
-
-  constructor(){
-    this.connection = new HubConnectionBuilder()
-    .withUrl(`http://localhost:7112/hub/chat/?token=${sessionStorage.getItem('token')}`, {
-      // accessTokenFactory: () => {
-      //   return sessionStorage.getItem('token')
-      // }
-      // transport: HttpTransportType.WebSockets | HttpTransportType.LongPolling
-    })
-    //.configureLogging(LogLevel.Information)
-    .build()
-  }
+  static connection;
   
 
+  constructor () {
+    if (ChatService.connection) {
+      return ChatService.connection
+    }else{
+      ChatService.connection = localStorage.getItem("CHAT_CONNECTION")
+    }
+    ChatService.connection = this
 
+  }
 
   async GetChatter (token) {
     const response = fetch(`http://localhost:7112/api/Chatter/${token}`, {
@@ -40,42 +31,39 @@ class ChatService {
     return response
   }
 
-  
-
-   InitConnection() {
+  InitConnection () {
+    this.connection = new HubConnectionBuilder()
+      .withUrl(
+        `http://localhost:7112/hub/chat/?token=${sessionStorage.getItem('token')}`
+      )
+      .build()
+      
+    //this.SetSignalRClientMethods()
     
 
-    //this.SetSignalRClientMethods()
-      
     this.connection
       .start()
       .then(() => {
         console.log('Connection started!')
-        
-        //newConnection.invoke("OnConnectedAsync");
       })
       .catch(error => {
         console.log('Conection closed with error fromCLient')
         console.error(error.message)
       })
 
-      return this.connection;
+      localStorage.setItem("CHAT_CONNECTION",this.connection)
+
+    return this.connection
   }
 
-  async CloseConnection(connection){
-     this.connection.stop()
-    .then(()=>{
-      console.log("Connection from signalR closed")
+  async CloseConnection () {
+    this.connection
+    .stop()
+    .then(() => {
+      console.log('Connection from signalR closed')
     })
-    
-    
-
   }
 
-
-  async SetSignalRClientMethods(){
-    //this.connection.on("ChatterConnected",)
-  }
 
 }
 export default ChatService

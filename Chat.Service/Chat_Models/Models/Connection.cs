@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chat_Models.Models
 {
-    public class ChatConnection
+    public class Connection
     {
         [Key]
-        public string ChatId { get; set; }
+        public string ConnectionId { get; set; }
         public Guid ChatterId { get; set; }
         public bool IsClosed { get; set; }
         public DateTime StartedAt { get; set; }
