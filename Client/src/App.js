@@ -10,6 +10,7 @@ import Home from '../src/Pages/Home/Home'
 import Rules from './Pages/Rules/Rules'
 import ChatService from './services/ChatService'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
+import Chats from './components/ContactsScreen/SideBar/Chats'
 
 function App () {
   const service = new IdentityService()
@@ -36,10 +37,11 @@ function App () {
       if(!user){
         setUser(JSON.parse(localStorage.getItem("USER_IDENTITY_2")))
       }
-      if(ChatService.connection){
-        console.log(ChatService.connection)
+      if(!connection){
+        chatService.InitConnection();
+        setConnection(ChatService.connection);
       }
-      console.log(ChatService.connection)    
+      console.log()    
      
   }, [user])
 
