@@ -14,8 +14,9 @@ namespace Chat_DAL.Repositories.interfaces
         Task<Connection> CreateChatConnectionAsync(string chatId, Guid chatterId, DateTime startedAt);
         Task<IEnumerable<Connection>> GetAllConnectionsByUserIdAsync(Guid chatterId);
         Task<Connection> GetChatByIdAsync(string chatId);       
-        void CloseChatConnectionAsync(string ChatId, DateTime endedAt);
+        void CloseConnectionAsync(string ChatId, DateTime endedAt);
         void CloseAllConnections();
+        bool CheckReconnectConnection(Guid chatterId);
 
     }
 }

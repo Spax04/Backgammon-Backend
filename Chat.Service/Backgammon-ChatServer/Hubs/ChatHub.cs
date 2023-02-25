@@ -49,7 +49,7 @@ namespace Backgammon_ChatServer.Hubs
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            await base.OnDisconnectedAsync(exception);
+
             await base.OnDisconnectedAsync(exception);
             string token = Context.GetHttpContext().Request.Query["token"].ToString();
 

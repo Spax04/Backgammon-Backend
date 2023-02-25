@@ -25,11 +25,15 @@ namespace Chat_Services
 
         private bool ConnectChatter(Guid chatterId, string connectionId)
         {
-            _chatRepo.CreateConnection(connectionId, chatterId,  DateTime.Now);
+           // var reconect = _chatRepo.CheckReconnectConnection(chatterId);
             var chatter = _chatterRepo.GetChatterAsync(chatterId);
-            if (chatter != null)
+
+            if (chatter == null)
                 return false;
+
+            _chatRepo.CreateConnection(connectionId, chatterId,  DateTime.Now);
             _chatterRepo.SetConnectedAsync(chatterId);
+
             return true;
         }
         public async Task<bool> ConnectChatterAsync(Guid chatterId, string connectionId) => await Task.Run(() => ConnectChatter(chatterId,  connectionId));
@@ -37,7 +41,7 @@ namespace Chat_Services
 
         public async Task<bool> DisconnectChatterAsync(Guid chatter, string connectionId)
         {
-            _chatRepo.CloseChatConnectionAsync(connectionId, DateTime.Now);
+            _chatRepo.CloseConnectionAsync(connectionId, DateTime.Now);
             var connections = await _chatRepo.GetAllConnectionsByUserIdAsync(chatter);
             if (!connections.Any(c => !c.IsClosed))
             {

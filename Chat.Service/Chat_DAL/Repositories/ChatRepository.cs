@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Chat_DAL.Repositories
 {
     public class ConnectionRepository : IChatRepository
@@ -47,6 +48,7 @@ namespace Chat_DAL.Repositories
                 return false;
             }
             _context.Connections.Remove(connection);
+            _context.SaveChanges();
             return true;
         }
 
@@ -72,30 +74,21 @@ namespace Chat_DAL.Repositories
         private IEnumerable<Connection> GetAllChatsByUserId(Guid chatterId)
         {
 
-            var allChats = _context!.Chatters!.Find(chatterId)!
-                .Connections!
-                .Select(u => new Connection
-                {
-                    ConnectionId = u.ConnectionId,
-                    ChatterId = u.ChatterId!,
-                    IsClosed = u.IsClosed,
-                    StartedAt = u.StartedAt,
-                    EndedAt = u.EndedAt
-                });
+            var allConnections = _context!.Connections!.Where(c => c.ChatterId == chatterId).ToList();
 
-             yield return (Connection)allChats;               
+            return allConnections;               
         }
         public async Task<IEnumerable<Connection>> GetAllConnectionsByUserIdAsync(Guid chatterId) => await Task.Run(() => GetAllChatsByUserId(chatterId));
 
 
-        public void CloseChatConnectionAsync(string chatId, DateTime endedAt)
+        public void CloseConnectionAsync(string connectionId, DateTime endedAt)
         {
-            var chat = _context?.Connections?.Find(chatId);
-            if (chat == null)
-                throw new ArgumentException("Not Found");
+            var connection = _context?.Connections?.Find(connectionId);
+            if (connection == null)
+               throw new ArgumentException("Not Found");
 
-            chat.IsClosed = true;
-            chat.EndedAt = endedAt;
+            connection.IsClosed = true;
+            connection.EndedAt = endedAt;
             _context!.SaveChanges();
         }
 
@@ -110,6 +103,11 @@ namespace Chat_DAL.Repositories
                 }
             }
             _context.SaveChanges();
-        }  
+        }
+
+        public Task<Connection> GetChatByIdAsync(string chatId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
