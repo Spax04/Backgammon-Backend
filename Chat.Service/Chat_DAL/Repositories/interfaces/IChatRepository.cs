@@ -13,7 +13,7 @@ namespace Chat_DAL.Repositories.interfaces
         Connection CreateChatConnection(string chatId, Guid chatterId, DateTime startedAt);
         Task<Connection> CreateChatConnectionAsync(string chatId, Guid chatterId, DateTime startedAt);
         Task<IEnumerable<Connection>> GetAllConnectionsByUserIdAsync(Guid chatterId);
-        Task<Connection> GetChatByIdAsync(string chatId);       
+        Task<Connection> GetConnectionByIdAsync(string chatId);       
         void CloseChatConnectionAsync(string ChatId, DateTime endedAt);
         void CloseAllConnections();
 

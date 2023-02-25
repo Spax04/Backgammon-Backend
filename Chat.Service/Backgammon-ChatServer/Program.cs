@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<IChatService, ChatService>();
 builder.Services.AddTransient<IMessageService, MessageService>();
-builder.Services.AddTransient<IChatRepository, ChatRepository>();
+builder.Services.AddTransient<IChatRepository, ConnectionRepository>();
 builder.Services.AddTransient<IChatterRepository, ChatterRepository>();
 builder.Services.AddTransient<IMessageRepository, MessageRepository>();
 

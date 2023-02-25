@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Chat_DAL.Repositories
 {
-    public class ChatRepository : IChatRepository
+    public class ConnectionRepository : IChatRepository
     {
         private DataContext _context;
-        public ChatRepository(DataContext context)
+        public ConnectionRepository(DataContext context)
         {
             _context = context;
         }
@@ -41,7 +41,7 @@ namespace Chat_DAL.Repositories
         
 
         // FINISHED
-        private Connection GetChatById(string chatId)
+        private Connection GetConnectionById(string chatId)
         {
             var chat = _context!.Connections!.FirstOrDefault(c => c.ConnectionId == chatId);
             if(chat == null)
@@ -56,7 +56,7 @@ namespace Chat_DAL.Repositories
                 EndedAt = chat.EndedAt
             };
         }
-        public async Task<Connection> GetChatByIdAsync(string chatId) => await Task.Run(() => GetChatById(chatId));
+        public async Task<Connection> GetConnectionByIdAsync(string chatId) => await Task.Run(() => GetConnectionById(chatId));
 
         // FINISHED
         private IEnumerable<Connection> GetAllChatsByUserId(Guid chatterId)

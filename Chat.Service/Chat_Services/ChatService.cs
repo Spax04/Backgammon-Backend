@@ -25,6 +25,7 @@ namespace Chat_Services
 
         private bool ConnectChatter(Guid chatterId, string connectionId)
         {
+
             _chatRepo.CreateChatConnection(connectionId, chatterId,  DateTime.Now);
             var chatter = _chatterRepo.GetChatterAsync(chatterId);
             if (chatter != null)
