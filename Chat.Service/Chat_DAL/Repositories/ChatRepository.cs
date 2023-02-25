@@ -38,7 +38,17 @@ namespace Chat_DAL.Repositories
 
         // FINISHED
 
-        
+        public bool CheckReconnectConnection( Guid chatterId)
+        {
+            var connection = _context.Connections.FirstOrDefault(c => c.ChatterId == chatterId);
+
+            if(connection == null)
+            {
+                return false;
+            }
+            _context.Connections.Remove(connection);
+            return true;
+        }
 
         // FINISHED
         private Connection GetConnectionById(string chatId)
