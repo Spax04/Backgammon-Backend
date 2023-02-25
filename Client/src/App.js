@@ -43,19 +43,9 @@ function App () {
       }
       console.log()    
      
-  }, [user])
+  }, [user,connection])
 
-// useEffect(()=>{
-//   if(!user){
-//     let usernew = window.localStorage.getItem("USER_IDENTITY_2")
-//     console.log(usernew);
-//     setUser(usernew)
-//   }
-//   if(!connection){
-//     //setConnection(window.localStorage.getItem("CHAT_SIGNALR_CONNECTION"))
-//   }
-  
-// },[])
+
   return (
     <div>
       {user ? (

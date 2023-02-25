@@ -24,12 +24,12 @@ builder.Services.AddTransient<IMessageRepository, MessageRepository>();
 if (builder.Environment.IsProduction())
 {
 
-    builder.Services.AddDbContext<ChatDataContext>(options =>
+    builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection")));
 }
 else
 {
-    builder.Services.AddDbContext<ChatDataContext>(options =>
+    builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DevelopmentConnection")));
 }
 

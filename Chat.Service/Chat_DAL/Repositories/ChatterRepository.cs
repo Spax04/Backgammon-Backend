@@ -13,8 +13,8 @@ namespace Chat_DAL.Repositories
 {
     public class ChatterRepository : IChatterRepository
     {
-        private readonly ChatDataContext _context;
-        public ChatterRepository(ChatDataContext chatterContext)
+        private readonly DataContext _context;
+        public ChatterRepository(DataContext chatterContext)
         {
             _context = chatterContext;
         }

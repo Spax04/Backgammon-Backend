@@ -3,16 +3,18 @@ using System;
 using Chat_DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace Chat_DAL.Migrations
 {
-    [DbContext(typeof(ChatDataContext))]
-    partial class ChatDataContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DataContext))]
+    [Migration("20230225065540_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.13");
@@ -59,7 +61,7 @@ namespace Chat_DAL.Migrations
 
                     b.HasIndex("ChatterId");
 
-                    b.ToTable("Chats");
+                    b.ToTable("Connections");
                 });
 
             modelBuilder.Entity("Chat_Models.Models.Message", b =>
@@ -69,6 +71,9 @@ namespace Chat_DAL.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ChatID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConnectionID")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -104,7 +109,7 @@ namespace Chat_DAL.Migrations
             modelBuilder.Entity("Chat_Models.Models.Connection", b =>
                 {
                     b.HasOne("Chat_Models.Models.Chatter", "Chatter")
-                        .WithMany("Chats")
+                        .WithMany("Connections")
                         .HasForeignKey("ChatterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -114,11 +119,9 @@ namespace Chat_DAL.Migrations
 
             modelBuilder.Entity("Chat_Models.Models.Message", b =>
                 {
-                    b.HasOne("Chat_Models.Models.Connection", "Chat")
+                    b.HasOne("Chat_Models.Models.Connection", "Connection")
                         .WithMany("Messages")
-                        .HasForeignKey("ChatID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChatID");
 
                     b.HasOne("Chat_Models.Models.Chatter", "Recipient")
                         .WithMany()
@@ -132,7 +135,7 @@ namespace Chat_DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Chat");
+                    b.Navigation("Connection");
 
                     b.Navigation("Recipient");
 
@@ -141,7 +144,7 @@ namespace Chat_DAL.Migrations
 
             modelBuilder.Entity("Chat_Models.Models.Chatter", b =>
                 {
-                    b.Navigation("Chats");
+                    b.Navigation("Connections");
                 });
 
             modelBuilder.Entity("Chat_Models.Models.Connection", b =>

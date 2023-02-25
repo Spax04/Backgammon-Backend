@@ -13,8 +13,8 @@ namespace Chat_DAL.Repositories
 {
     public class MessageRepository : IMessageRepository
     {
-        readonly ChatDataContext _context;
-        public MessageRepository(ChatDataContext context)
+        readonly DataContext _context;
+        public MessageRepository(DataContext context)
         {
             _context= context;
         }

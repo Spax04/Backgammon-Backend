@@ -12,7 +12,7 @@ namespace Chat_Models.Models
     {
         [Key]
         public Guid MessageeID { get; set; }
-        public string ChatID { get; set; }
+        public string ConnectionID { get; set; }
         public Guid SenderId { get; set; }
         public Guid RecipientId { get; set; }
         public string? NewMessage { get; set; }
@@ -22,7 +22,7 @@ namespace Chat_Models.Models
 
 
         [ForeignKey("ChatID")]
-        public virtual Connection Chat { get; set; }
+        public virtual Connection Connection { get; set; }
 
         [ForeignKey("SenderId")]
         public virtual Chatter Sender { get; set; }

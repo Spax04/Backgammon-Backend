@@ -23,30 +23,7 @@ namespace Backgammon_ChatServer.Controllers
             _chatService = chatService;
         }
 
-        [HttpGet("{token}")]
-        public async Task<ActionResult<Chatter>> Get(string token)
-        {
-            if (token == string.Empty || token == null)
-                return BadRequest("User input error");
-
-            var tokenCheck = new JwtSecurityToken(token);
-
-            string id = tokenCheck.Claims.First(x => x.Type == "userId").Value;
-            string name = tokenCheck.Claims.First(x => x.Type == "name").Value;
-
-            Guid guid = Guid.Parse(id);
-
-            if (guid != Guid.Empty)
-            {
-                await _chatService.GetOrAddChatterAsync(guid, name);
-            }
-            else
-            {
-                return BadRequest("Guid null");
-            }
-            return Ok(await _chatterRepository.GetChatterAsync(guid));
-            //return Ok();
-        }
+        
 
     }
 }

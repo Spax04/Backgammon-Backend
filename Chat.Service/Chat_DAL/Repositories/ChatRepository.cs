@@ -13,8 +13,8 @@ namespace Chat_DAL.Repositories
 {
     public class ChatRepository : IChatRepository
     {
-        private ChatDataContext _context;
-        public ChatRepository(ChatDataContext context)
+        private DataContext _context;
+        public ChatRepository(DataContext context)
         {
             _context = context;
         }
@@ -29,7 +29,7 @@ namespace Chat_DAL.Repositories
                 StartedAt = startedAt,
                 IsClosed = false
             };
-            _context!.Chats!.Add(newChat);
+            _context!.Connections!.Add(newChat);
             _context!.SaveChanges();
 
             return newChat;
@@ -43,7 +43,7 @@ namespace Chat_DAL.Repositories
         // FINISHED
         private Connection GetChatById(string chatId)
         {
-            var chat = _context!.Chats!.FirstOrDefault(c => c.ConnectionId == chatId);
+            var chat = _context!.Connections!.FirstOrDefault(c => c.ConnectionId == chatId);
             if(chat == null)
                 throw new ArgumentException("Not Found");
 
@@ -63,7 +63,7 @@ namespace Chat_DAL.Repositories
         {
 
             var allChats = _context!.Chatters!.Find(chatterId)!
-                .Chats!
+                .Connections!
                 .Select(u => new Connection
                 {
                     ConnectionId = u.ConnectionId,
@@ -80,7 +80,7 @@ namespace Chat_DAL.Repositories
 
         public void CloseChatConnectionAsync(string chatId, DateTime endedAt)
         {
-            var chat = _context?.Chats?.Find(chatId);
+            var chat = _context?.Connections?.Find(chatId);
             if (chat == null)
                 throw new ArgumentException("Not Found");
 
@@ -91,7 +91,7 @@ namespace Chat_DAL.Repositories
 
         public void CloseAllConnections()
         {
-            foreach(var chat in _context!.Chats!)
+            foreach(var chat in _context!.Connections!)
             {
                 if (!chat.IsClosed)
                 {

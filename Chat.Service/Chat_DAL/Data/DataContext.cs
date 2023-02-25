@@ -4,14 +4,14 @@ using System.Reflection.Emit;
 
 namespace Chat_DAL.Data
 {
-    public class ChatDataContext : DbContext
+    public class DataContext : DbContext
     {
-        public ChatDataContext(DbContextOptions<ChatDataContext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 
         }
         
-        public DbSet<Connection>? Chats { get; set; }
+        public DbSet<Connection>? Connections { get; set; }
         public DbSet<Message>? Messages { get; set; }
         public DbSet<Chatter>? Chatters { get; set; }
 
@@ -20,7 +20,7 @@ namespace Chat_DAL.Data
             base.OnModelCreating(builder);
 
             builder.Entity<Chatter>()
-       .HasMany(ch => ch.Chats)
+       .HasMany(ch => ch.Connections)
        .WithOne(c => c.Chatter)
        .HasForeignKey(c => c.ChatterId);
 /*

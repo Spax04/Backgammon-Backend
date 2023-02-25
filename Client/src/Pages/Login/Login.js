@@ -42,34 +42,8 @@ const LoginForm = props => {
 
           const chatService = new ChatService()
           let newConnection = chatService.InitConnection();
-          console.log("New connecton: " + newConnection)
           props.setConnection(newConnection);
-      //     const newConnection = new HubConnectionBuilder()
-      //     .withUrl(
-      //       `http://localhost:7112/hub/chat/?token=${sessionStorage.getItem(
-      //         'token'
-      //       )}`,
-      //     )
-      //     //.configureLogging(LogLevel.Information)
-      //     .build()
-      //     props.setConnection(newConnection);
-      //     console.log(newConnection + " FROM LOGIN");
-      //     console.log(typeof(newConnection));
-      //     console.log(newConnection + " FROM LOGIN");
-      //     console.log(newConnection);
-      //     localStorage.setItem("CHAT_CONNECTION",newConnection)
-      //  if(newConnection){
-
-      //   newConnection
-      //   .start()
-      //   .then(() => {
-      //     console.log('Connection started! From Home')
-      //   })
-      //   .catch(error => {
-      //     console.log('Conection closed with error fromCLient')
-      //     console.error(error.message)
-      //   })
-      //}
+      
         navigation('/')
       })
   }
