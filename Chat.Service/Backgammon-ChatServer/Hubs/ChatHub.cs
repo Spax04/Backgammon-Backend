@@ -22,21 +22,13 @@ namespace Backgammon_ChatServer.Hubs
         public override async Task OnConnectedAsync()
         {
             await base.OnConnectedAsync();
-            // var token = Context.GetHttpContext().Request.Headers["Authorization"].ToString();
-              string token = Context.GetHttpContext().Request.Query["token"].ToString();
-
-            //var token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MDRmZWU5Yi1mMGMxLTQxMTAtODMwNS1jMzI2YjRmMzFkNGYiLCJ1c2VySWQiOiJlMzgxZWZkOS1mMTNjLTRiNmItOTk3ZS0zYTExYmU1NTBiOGUiLCJuYW1lIjoic3RyaW5nIiwiZW1haWwiOiJzdHJpbmciLCJleHAiOjE3MDY5NTg0NjV9._m7yCY59dQV4xQ3X0FpD6AQZ21QlnPf20dJuaHCOL7OSxed4iVnF4lVa2qZiOFAb6MiXswBr2lkZje_mXBrA9A";
-
-
-            //var testToken = Request.Cookies["jwt"];
+            string token = Context.GetHttpContext().Request.Query["token"].ToString();
 
             var tokenCheck = new JwtSecurityToken(token);
             string id = tokenCheck.Claims.First(x => x.Type == "userId").Value;
             string name = tokenCheck.Claims.First(x => x.Type == "name").Value;
             Guid chaterId = Guid.Parse(id);
 
-
-            // Add user to connected list, 
             var chatter = await _chatService.GetOrAddChatterAsync(chaterId, name);
 
             var isFirstConnect = await _chatService.ConnectChatterAsync((Guid)chatter.Id, Context.ConnectionId);
@@ -47,7 +39,7 @@ namespace Backgammon_ChatServer.Hubs
             {
                 var chatterIds = chattersWithoutCaller.Select(c => c.Id.ToString()).ToList();
 
-                // Who is online - automatacly get new user that conected
+                // Who is online - automatacly gets new user that connected
                 await Clients.Users(chatterIds).SendAsync("ChatterConnected", chatter);
             }
             // Caller gets list of users online

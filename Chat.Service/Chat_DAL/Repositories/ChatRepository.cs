@@ -20,21 +20,21 @@ namespace Chat_DAL.Repositories
         }
 
         // FINISHED
-        public Connection CreateChatConnection(string chatId, Guid chatterId, DateTime startedAt)
+        public Connection CreateConnection(string connectionId, Guid chatterId, DateTime startedAt)
         {
-            Connection newChat = new Connection
+            Connection newConnection = new Connection
             {
-                ConnectionId = chatId,
+                ConnectionId = connectionId,
                 ChatterId = chatterId,
                 StartedAt = startedAt,
                 IsClosed = false
             };
-            _context!.Connections!.Add(newChat);
+            _context!.Connections!.Add(newConnection);
             _context!.SaveChanges();
 
-            return newChat;
+            return newConnection;
         }
-        public async Task<Connection> CreateChatConnectionAsync(string chatId, Guid chatterId, DateTime startedAt) => await Task.Run(() => CreateChatConnection(chatId,  chatterId,   startedAt));
+        public async Task<Connection> CreateChatConnectionAsync(string chatId, Guid chatterId, DateTime startedAt) => await Task.Run(() => CreateConnection(chatId,  chatterId,   startedAt));
 
         // FINISHED
 
