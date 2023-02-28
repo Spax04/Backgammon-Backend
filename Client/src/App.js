@@ -41,7 +41,7 @@ function App () {
         chatService.InitConnection();
         setConnection(ChatService.connection);
       }
-      console.log()    
+      console.log("$$$ AppJS $$$ " + connection)    
      
   }, [user,connection])
 

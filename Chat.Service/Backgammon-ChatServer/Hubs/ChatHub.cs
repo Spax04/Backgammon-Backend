@@ -31,6 +31,8 @@ namespace Backgammon_ChatServer.Hubs
 
             var chatter = await _chatService.GetOrAddChatterAsync(chaterId, name);
 
+
+            // create connection with current chatter and toggle connection to true -- returns true if conection was created
             var isFirstConnect = await _chatService.ConnectChatterAsync((Guid)chatter.Id, Context.ConnectionId);
 
             var chattersWithoutCaller = await _chatService.GetChattersAsync(chaterId);
