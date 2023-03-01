@@ -12,13 +12,13 @@ function NavBar (props) {
   const chatService = new ChatService();
 
   const service = new IdentityService()
+
   const logout = () => {
     service.Logout()
     sessionStorage.clear('token')
     localStorage.clear("USER_IDENTITY_2");
     props.setUser(null)
-    chatService
-    .CloseConnection()
+    props.StopConnection();
   }
 
   return (

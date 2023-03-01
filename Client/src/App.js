@@ -19,7 +19,7 @@ function App () {
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [connection, setConnection] = useState()
-  const [users,setUsers] = useState([])
+  const [chatters, setChatters] = useState([])
 
   const StopConnection = ()=>{
     if(connection){
@@ -31,6 +31,45 @@ function App () {
     }
   }
 
+  const InitConnection = () =>{
+    const connection = new HubConnectionBuilder()
+    .withUrl(
+      `http://localhost:7112/hub/chat/?token=${sessionStorage.getItem(
+        'token'
+      )}`
+    )
+    .build()
+    console.log(connection)
+    setConnection(connection);
+   
+    connection
+    .start()
+    .then(() => {
+      console.log('Connection started!')
+      console.log(connection)
+      setConnection(connection);
+     
+      connection.on('ChatterConnected', newChatter=>{
+        const newArr = [...chatters, newChatter]
+        setChatters(newArr)
+      });
+
+      connection.on('SetChatters', chattersOnline => {
+        console.log(chattersOnline)
+        const newArr = [...chattersOnline]
+        console.log(newArr)
+        setChatters(newArr)
+        
+      });
+      
+    })
+    .catch(error => {
+      console.log('Conection closed with error fromCLient')
+      console.error(error.message)
+    })
+    console.log(chatters);
+  }
+
 
   useEffect(() => {
     
@@ -38,12 +77,9 @@ function App () {
         setUser(JSON.parse(localStorage.getItem("USER_IDENTITY_2")))
       }
       if(!connection){
-        chatService.InitConnection();
-        setConnection(ChatService.connection);
+        InitConnection();
       }
-      console.log("$$$ AppJS $$$ " + connection)    
-     
-  }, [user,connection])
+  }, [user,connection,chatters])
 
 
   return (
@@ -58,11 +94,11 @@ function App () {
         <Route
           path='/'
           exact
-          element={<Home user={user}  setConnection={setConnection}/>}
+          element={<Home user={user} chatters={chatters} />}
         />
         <Route
           path='/login'
-          element={<Login setUser={setUser}  setConnection={setConnection} />}
+          element={<Login setUser={setUser} setChatters={setChatters}  InitConnection={InitConnection} />}
         />
         <Route path='/register' element={<Register />} />
         <Route path='/rules' element={<Rules />} />

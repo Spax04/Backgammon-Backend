@@ -32,18 +32,15 @@ const LoginForm = props => {
           .GetUser(resp.token)
           .then(resp => {
             return resp.json()
-            
           })
           .then(resp => {
             props.setUser(resp)
-            console.log(resp);
-            localStorage.setItem("USER_IDENTITY_2",JSON.stringify(resp))
+            console.log(resp)
+            localStorage.setItem('USER_IDENTITY_2', JSON.stringify(resp))
           })
 
-          const chatService = new ChatService()
-          let newConnection = chatService.InitConnection();
-          props.setConnection(newConnection);
-      
+        props.InitConnection()
+
         navigation('/')
       })
   }

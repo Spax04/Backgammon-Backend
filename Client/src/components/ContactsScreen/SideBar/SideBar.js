@@ -7,26 +7,20 @@ import SideBarNavBar from "./SideBarNavBar";
 
 const SideBar = (props) => {
 
-  const [newRender,setRender] = useState(false);
- 
-const [user,setUser] = useState(null);
 
-useEffect(()=>{
-  
-},[])
+
+  useEffect(()=>{
+    
+  },[])
 
   return <div>
      <div className="sidebar">
       <SideBarNavBar username={props.user.username}/>
       <Search />
-      <Chats />
-  
+      <Chats chatters={props.chatters}/>
     </div>
   </div>
 
-    
-
-  
 };
 
 export default SideBar;

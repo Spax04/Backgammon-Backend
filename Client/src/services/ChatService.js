@@ -5,15 +5,13 @@ import { BehaviorSubject } from 'rxjs'
 
 class ChatService {
   static connection
-  static chatters
+  static chatters 
 
   constructor () {
     if (ChatService.connection) {
       return ChatService.connection
     }
-    if (ChatService.chatters) {
-      return ChatService.chatters
-    }
+    
     ChatService.connection = this
     ChatService.chatters = this
   }
@@ -46,11 +44,14 @@ class ChatService {
       .then(() => {
         console.log('Connection started!')
 
-        this.connection.on('ChatterConnected')
-        this.connection.on('SetChatters', chattersOnline => {
-          //this.chatters = chattersOnline;
-          console.log(chattersOnline);
-        })
+        this.connection.on('ChatterConnected', newChatter=>{
+        });
+
+        // this.connection.on('SetChatters', chattersOnline => {
+
+        //   this.chatters = chattersOnline;
+        //   console.log(this.chatters);
+        // });
       })
       .catch(error => {
         console.log('Conection closed with error fromCLient')
@@ -65,5 +66,14 @@ class ChatService {
       console.log('Connection from signalR closed')
     })
   }
+  async ReturnChatters () {
+    this.connection.on('SetChatters', chattersOnline => {
+
+     let chattersList = JSON.parse( chattersOnline);
+      //console.log(this.chatters);
+      return chattersList;
+    });
+  }
+
 }
 export default ChatService

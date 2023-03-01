@@ -12,7 +12,6 @@ function Home (props) {
   const service = new IdentityService()
 
   const navigate = useNavigate()
-  const [connection,setConnection] = useState();
   const [users,setUsers] = useState([])
   
 
@@ -34,7 +33,7 @@ function Home (props) {
         
         <Container>
          
-          <SideBar user={props.user} />
+          <SideBar user={props.user} chatters={props.chatters} />
           <Chat />
         </Container>
       ) : (
