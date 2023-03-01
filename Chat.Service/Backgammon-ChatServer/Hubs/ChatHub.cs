@@ -37,13 +37,13 @@ namespace Backgammon_ChatServer.Hubs
 
             var chattersWithoutCaller = await _chatService.GetChattersAsync(chaterId);
 
-            if (isFirstConnect)
-            {
+           // if (isFirstConnect)
+           //{
                 var chatterIds = chattersWithoutCaller.Select(c => c.Id.ToString()).ToList();
 
                 // Who is online - automatacly gets new user that connected
-                await Clients.Users(chatterIds).SendAsync("ChatterConnected", chatter);
-            }
+                await Clients.All.SendAsync("ChatterConnected", chatter);
+            //}
             // Caller gets list of users online
             await Clients.Caller.SendAsync("SetChatters", chattersWithoutCaller);
         }

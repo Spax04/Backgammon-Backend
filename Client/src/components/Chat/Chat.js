@@ -4,7 +4,7 @@ import { HubConnectionBuilder } from '@microsoft/signalr';
 import ChatWindow from './ChatWindow/ChatWindow';
 import ChatInput from './ChatInput/ChatInput';
 
-const Chat = () => {
+const ChatChat = () => {
     const [ connection, setConnection ] = useState(null);
     const [ chat, setChat ] = useState([]);
     const latestChat = useRef(null);
@@ -65,4 +65,4 @@ const Chat = () => {
     );
 };
 
-export default Chat;
+export default ChatChat;

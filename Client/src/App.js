@@ -46,10 +46,8 @@ function App () {
     .start()
     .then(() => {
       console.log('Connection started!')
-      console.log(connection)
-      setConnection(connection);
-     
-      connection.on('ChatterConnected', newChatter=>{
+
+      connection.on('ChatterConnected', newChatter => {
         const newArr = [...chatters, newChatter]
         setChatters(newArr)
       });
@@ -70,6 +68,12 @@ function App () {
     console.log(chatters);
   }
 
+  useEffect(() => {
+   
+    
+
+
+}, [connection])
 
   useEffect(() => {
     
@@ -79,6 +83,9 @@ function App () {
       if(!connection){
         InitConnection();
       }
+
+
+
   }, [user,connection,chatters])
 
 

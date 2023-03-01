@@ -7,6 +7,7 @@ import '../Home/Home.css'
 import { useNavigate } from 'react-router-dom'
 import IdentityService from '../../services/IdentityService'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
+import ChatChat from '../../components/Chat/Chat'
 
 function Home (props) {
   const service = new IdentityService()
@@ -40,6 +41,8 @@ function Home (props) {
         <div></div>
       )}
     </div>
+   
+    
   )
 }
 export default Home
